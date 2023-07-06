@@ -34,13 +34,7 @@ export const LoginSchema = yup.object({
     .string()
     .required('Vui lòng nhập Password')
     .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
-    .max(60, 'Mật khẩu không quá 60 ký tự'),
-  confirm_password: yup
-    .string()
-    .required('Vui lòng nhập lại Password')
-    .min(8, 'Mật khẩu nhập lại ít nhất 8 ký tự')
-    .max(60, 'Mật khẩu nhập lại không quá 60 ký tự')
-    .oneOf([yup.ref('password')], 'Nhập lại mật khẩu không khớp')
+    .max(60, 'Mật khẩu không quá 60 ký tự')
 })
 
 export type LoginSchemaType = yup.InferType<typeof LoginSchema>

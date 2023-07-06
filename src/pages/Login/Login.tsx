@@ -2,18 +2,50 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginSchema, LoginSchemaType } from 'src/utils/rules'
+import { useMutation } from '@tanstack/react-query'
+import { login } from 'src/apis/auth.api'
+import { isAxiosUnprocessableEntity } from 'src/utils/utils'
+import { ResponseApi } from 'src/types/utils.type'
 
 const Login = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors }
   } = useForm<LoginSchemaType>({
     resolver: yupResolver(LoginSchema)
   })
 
+  const loginMutation = useMutation({
+    mutationFn: (body: LoginSchemaType) => {
+      return login(body)
+    }
+  })
+
   const onSubmit = handleSubmit((data) => {
-    // console.log(data)
+    loginMutation.mutate(data, {
+      onSuccess: (data) => {
+        console.log(data)
+      },
+      onError: (error) => {
+        if (isAxiosUnprocessableEntity<ResponseApi<LoginSchemaType>>(error)) {
+          const loginError = error.response?.data.data
+          if (loginError?.email) {
+            setError('email', {
+              message: loginError.email,
+              type: 'Server'
+            })
+          }
+          if (loginError?.password) {
+            setError('password', {
+              message: loginError.password,
+              type: 'Server'
+            })
+          }
+        }
+      }
+    })
   })
 
   return (
