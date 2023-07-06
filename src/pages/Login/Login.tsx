@@ -1,33 +1,51 @@
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoginSchema, LoginSchemaType } from 'src/utils/rules'
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<LoginSchemaType>({
+    resolver: yupResolver(LoginSchema)
+  })
+
+  const onSubmit = handleSubmit((data) => {
+    // console.log(data)
+  })
+
   return (
     <div className='bg-[url("https://down-vn.img.susercontent.com/file/sg-11134004-7qvfc-lisjisjilfqv70")] bg-no-repeat bg-cover bg-center h-[600px]'>
-      <div className='max-w-[1200px] mx-auto px-[60px] h-full'>
+      <div className='container px-[60px]'>
         <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-[60px]'>
           <div className='lg:col-span-2 lg:col-start-4 bg-white rounded-sm p-[30px] '>
-            <form action=''>
+            <form onSubmit={onSubmit} noValidate>
               <h1 className='text-xl'>Đăng nhập</h1>
               <div className='mt-8'>
                 <input
                   type='email'
-                  name='email'
                   className='py-2 px-3 w-full outline-none rounded-sm border border-gray-300 focus:border-gray-500 focus:shadow font-light'
                   placeholder='Email'
+                  {...register('email')}
                 />
-                <span className='block min-h-[16px] text-red-700 text-xs mt-1 font-light'>Vui lòng nhập Email</span>
+                <span className='block min-h-[16px] text-red-700 text-xs mt-1 font-light'>{errors.email?.message}</span>
               </div>
               <div className='mt-3'>
                 <input
                   type='password'
-                  name='password'
                   className='py-2 px-3 w-full outline-none rounded-sm border border-gray-300 focus:border-gray-500 focus:shadow font-light'
                   placeholder='Mật khẩu'
+                  autoComplete='on'
+                  {...register('password')}
                 />
-                <span className='block min-h-[16px] text-red-700 text-xs mt-1 font-light'>Vui lòng nhập mật khẩu</span>
+                <span className='block min-h-[16px] text-red-700 text-xs mt-1 font-light'>
+                  {errors.password?.message}
+                </span>
               </div>
               <div className='mt-3'>
-                <button className='w-full bg-orange text-white py-[10px] rounded-sm uppercase text-sm'>
+                <button type='submit' className='w-full bg-orange text-white py-[10px] rounded-sm uppercase text-sm'>
                   Đăng Nhập
                 </button>
               </div>
