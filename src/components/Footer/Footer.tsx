@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <footer className='py-[48px]'>
-      <div className='container'>
+    <footer>
+      <div className='container py-[48px]'>
         <div className='grid grid-cols-5 gap-4'>
           <div className='col-span-1'>
             <h3 className='mb-2 text-[13px] font-semibold fill-text uppercase'>Chăm sóc khách hàng</h3>
@@ -29,17 +29,17 @@ const Footer = () => {
             <h3 className='mb-2 text-[13px] font-semibold fill-text uppercase'>Về Shopee</h3>
             <ul>
               <li>
-                <Link to={'/'} className='mb-1 text-[12px] font-light capitalize text-[#3f3f3f] hover:text-[#ee4d2d]'>
+                <Link to={'/!'} className='mb-1 text-[12px] font-light capitalize text-[#3f3f3f] hover:text-[#ee4d2d]'>
                   Giới thiệu về Shopee Việt Nam
                 </Link>
               </li>
               <li>
-                <Link to={'/'} className='mb-1 text-[12px] font-light capitalize text-[#3f3f3f] hover:text-[#ee4d2d]'>
+                <Link to={'/!'} className='mb-1 text-[12px] font-light capitalize text-[#3f3f3f] hover:text-[#ee4d2d]'>
                   Tuyển dụng
                 </Link>
               </li>
               <li>
-                <Link to={'/'} className='mb-1 text-[12px] font-light capitalize text-[#3f3f3f] hover:text-[#ee4d2d]'>
+                <Link to={'/!'} className='mb-1 text-[12px] font-light capitalize text-[#3f3f3f] hover:text-[#ee4d2d]'>
                   Điều khoản Shopee
                 </Link>
               </li>
@@ -110,11 +110,7 @@ const Footer = () => {
             <h3 className='mb-2 text-[13px] font-semibold fill-text uppercase'>Tải ứng dụng Shopee</h3>
             <div className='flex'>
               <div className='shadow-[rgba(50,_50,_105,_0.25)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] p-1 rounded-sm'>
-                <img
-                  src='https://down-vn.img.susercontent.com/file/a5e589e8e118e937dc660f224b9a1472'
-                  className=''
-                  alt='QR code'
-                />
+                <img src='https://down-vn.img.susercontent.com/file/a5e589e8e118e937dc660f224b9a1472' alt='QR code' />
               </div>
               <div className='ml-3 flex flex-col justify-between'>
                 <a
@@ -125,7 +121,6 @@ const Footer = () => {
                 >
                   <img
                     src='https://down-vn.img.susercontent.com/file/ae7dced05f7243d0f3171f786e123def'
-                    className=''
                     alt='Google Play'
                   />
                 </a>
@@ -137,7 +132,6 @@ const Footer = () => {
                 >
                   <img
                     src='https://down-vn.img.susercontent.com/file/ad01628e90ddf248076685f73497c163'
-                    className=''
                     alt='App store'
                   />
                 </a>
@@ -149,7 +143,6 @@ const Footer = () => {
                 >
                   <img
                     src='https://down-vn.img.susercontent.com/file/35352374f39bdd03b25e7b83542b2cb0'
-                    className=''
                     alt='App Gallery'
                   />
                 </a>
@@ -158,7 +151,9 @@ const Footer = () => {
           </div>
         </div>
         <div className='mx-auto mt-6'>
-          <p className='text-center text-[#737373] text-[14px]'>© 2023 - Bản quyền thuộc về Công ty TNHH Shopee</p>
+          <p className='text-center text-[#737373] text-[14px] font-light'>
+            © 2023 - Bản quyền thuộc về Công ty TNHH Shopee
+          </p>
         </div>
       </div>
     </footer>
