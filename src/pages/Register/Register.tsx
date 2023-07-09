@@ -10,9 +10,10 @@ import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
+import path from 'src/constants/path'
 
 const Register = () => {
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
 
   const {
@@ -33,9 +34,10 @@ const Register = () => {
   const onSubmit = handleSubmit((data) => {
     const body = omit(data, ['confirm_password'])
     registerAccountMutation.mutate(body, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsAuthenticated(true)
-        navigate('/')
+        setProfile(data.data.data.user)
+        navigate(path.home)
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntity<ErrorResponse<Omit<RegisterSchemaType, 'confirm_password'>>>(error)) {
@@ -109,7 +111,7 @@ const Register = () => {
               </div>
               <footer className='mt-6 text-center'>
                 <span className='text-sm text-[#b5b5b5] font-light mr-1'>Bạn đã có tài khoản?</span>
-                <Link to={'/login'} className='text-sm text-[#ee4d2d] font-normal'>
+                <Link to={path.login} className='text-sm text-[#ee4d2d] font-normal'>
                   Đăng nhập
                 </Link>
               </footer>

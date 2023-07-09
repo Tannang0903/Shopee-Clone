@@ -5,14 +5,16 @@ import { logout } from 'src/apis/auth.api'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import { getAccessTokenFromLS } from 'src/utils/auth'
+import path from 'src/constants/path'
 
 const Header = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
 
   const logoutMutation = useMutation({
     mutationFn: (token: string) => logout(token),
     onSuccess: () => {
       setIsAuthenticated(false)
+      setProfile(null)
     }
   })
 
@@ -88,7 +90,7 @@ const Header = () => {
                   <div className='bg-white relative shadow-md rounded-sm border border-gray-100 overflow-hidden'>
                     <div className='flex flex-col w-[160px]'>
                       <Link
-                        to={'/profile'}
+                        to={path.profile}
                         className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'
                       >
                         Tài khoản của tôi
@@ -111,15 +113,15 @@ const Header = () => {
                   alt=''
                   className='w-5 h-5 inline-block rounded-[50%]'
                 />
-                <span className='ml-1 hover:text-gray-300'>Huỳnh Tấn Năng</span>
+                <span className='ml-1 hover:text-gray-300'>{profile?.email}</span>
               </Popover>
             )}
             {!isAuthenticated && (
               <li className='flex items-center'>
-                <Link to={'/register'} className=' px-3 capitalize hover:text-white/70 border-r border-r-gray-300'>
+                <Link to={path.register} className=' px-3 capitalize hover:text-white/70 border-r border-r-gray-300'>
                   Đăng kí
                 </Link>
-                <Link to={'/login'} className=' px-3 capitalize hover:text-white/70 '>
+                <Link to={path.login} className=' px-3 capitalize hover:text-white/70 '>
                   Đăng nhập
                 </Link>
               </li>
@@ -128,7 +130,7 @@ const Header = () => {
         </nav>
         <div className='grid grid-cols-12 gap-4 justify-between h-[84px]'>
           <div className='col-span-2 flex items-center'>
-            <Link to={'/'} className=' block w-36 pl-[6px]'>
+            <Link to={path.home} className=' block w-36 pl-[6px]'>
               <svg viewBox='0 0 192 65' className=''>
                 <g fillRule='evenodd'>
                   <path
@@ -203,7 +205,7 @@ const Header = () => {
                   </li>
                 </ul>
                 <div className='flex justify-end mt-4 mb-2'>
-                  <Link to={'/!'} className='px-2 py-1 bg-[#fb5a24] rounded-sm shadow-sm mr-2'>
+                  <Link to={'/!'} className='px-2 py-1 bg-[#fb5a24] rounded-sm shadow-sm mr-2 text-white'>
                     Xem giỏ hàng
                   </Link>
                 </div>

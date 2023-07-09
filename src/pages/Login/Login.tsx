@@ -9,9 +9,10 @@ import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
+import path from 'src/constants/path'
 
 const Login = () => {
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
 
   const {
@@ -31,9 +32,10 @@ const Login = () => {
 
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsAuthenticated(true)
-        navigate('/')
+        setProfile(data.data.data.user)
+        navigate(path.home)
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntity<ErrorResponse<LoginSchemaType>>(error)) {
@@ -103,7 +105,7 @@ const Login = () => {
               </div>
               <footer className='mt-6 text-center'>
                 <span className='text-sm text-[#b5b5b5] font-light mr-1'>Bạn mới biết đến Shopee?</span>
-                <Link to={'/register'} className='text-sm text-[#ee4d2d] font-normal'>
+                <Link to={path.register} className='text-sm text-[#ee4d2d] font-normal'>
                   Đăng ký
                 </Link>
               </footer>
