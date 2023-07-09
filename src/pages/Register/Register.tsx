@@ -1,14 +1,20 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterSchema, RegisterSchemaType } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
 import { registerAccount } from 'src/apis/auth.api'
 import { omit } from 'lodash'
 import { isAxiosUnprocessableEntity } from 'src/utils/utils'
-import { ResponseApi } from 'src/types/utils.type'
+import { ErrorResponse } from 'src/types/utils.type'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 
 const Register = () => {
+  const { setIsAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -27,11 +33,12 @@ const Register = () => {
   const onSubmit = handleSubmit((data) => {
     const body = omit(data, ['confirm_password'])
     registerAccountMutation.mutate(body, {
-      onSuccess: (data) => {
-        console.log(data)
+      onSuccess: () => {
+        setIsAuthenticated(true)
+        navigate('/')
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntity<ResponseApi<Omit<RegisterSchemaType, 'confirm_password'>>>(error)) {
+        if (isAxiosUnprocessableEntity<ErrorResponse<Omit<RegisterSchemaType, 'confirm_password'>>>(error)) {
           const registerError = error.response?.data.data
           if (registerError?.email) {
             setError('email', {
@@ -91,9 +98,14 @@ const Register = () => {
                 </span>
               </div>
               <div className='mt-3'>
-                <button type='submit' className='w-full bg-orange text-white py-[10px] rounded-sm uppercase text-sm'>
-                  Đăng kí
-                </button>
+                <Button
+                  type='submit'
+                  className='flex justify-center items-center w-full bg-orange text-white py-[10px] rounded-sm uppercase text-sm'
+                  isLoading={registerAccountMutation.isLoading}
+                  disabled={registerAccountMutation.isLoading}
+                >
+                  Đăng Nhập
+                </Button>
               </div>
               <footer className='mt-6 text-center'>
                 <span className='text-sm text-[#b5b5b5] font-light mr-1'>Bạn đã có tài khoản?</span>

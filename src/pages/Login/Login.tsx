@@ -1,13 +1,19 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginSchema, LoginSchemaType } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
 import { login } from 'src/apis/auth.api'
 import { isAxiosUnprocessableEntity } from 'src/utils/utils'
-import { ResponseApi } from 'src/types/utils.type'
+import { ErrorResponse } from 'src/types/utils.type'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 
 const Login = () => {
+  const { setIsAuthenticated } = useContext(AppContext)
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -25,11 +31,12 @@ const Login = () => {
 
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
-      onSuccess: (data) => {
-        console.log(data)
+      onSuccess: () => {
+        setIsAuthenticated(true)
+        navigate('/')
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntity<ResponseApi<LoginSchemaType>>(error)) {
+        if (isAxiosUnprocessableEntity<ErrorResponse<LoginSchemaType>>(error)) {
           const loginError = error.response?.data.data
           if (loginError?.email) {
             setError('email', {
@@ -77,9 +84,14 @@ const Login = () => {
                 </span>
               </div>
               <div className='mt-3'>
-                <button type='submit' className='w-full bg-orange text-white py-[10px] rounded-sm uppercase text-sm'>
+                <Button
+                  type='submit'
+                  className='flex justify-center items-center w-full bg-orange text-white py-[10px] rounded-sm uppercase text-sm'
+                  isLoading={loginMutation.isLoading}
+                  disabled={loginMutation.isLoading}
+                >
                   Đăng Nhập
-                </button>
+                </Button>
               </div>
               <div className='mt-1 flex justify-between'>
                 <Link to={'/!'} className='text-blue-800  text-xs mt-1 font-light'>

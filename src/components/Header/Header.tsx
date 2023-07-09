@@ -1,7 +1,26 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
+import { useMutation } from '@tanstack/react-query'
+import { logout } from 'src/apis/auth.api'
+import { useContext } from 'react'
+import { AppContext } from 'src/contexts/app.context'
+import { getAccessTokenFromLS } from 'src/utils/auth'
 
 const Header = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+
+  const logoutMutation = useMutation({
+    mutationFn: (token: string) => logout(token),
+    onSuccess: () => {
+      setIsAuthenticated(false)
+    }
+  })
+
+  const handleLogout = () => {
+    const token = getAccessTokenFromLS().split(' ')[1]
+    logoutMutation.mutate(token)
+  }
+
   return (
     <header className='h-[120px] bg-gradient-to-b from-[#f53d2d] to-[#f63]'>
       <div className='container text-[14px] leading-4 text-white font-light'>
@@ -61,32 +80,50 @@ const Header = () => {
               <span className='mr-1 ml-1 capitalize'>Tiếng Việt</span>
               <i className='fa-solid fa-angle-down'></i>
             </Popover>
-            <Popover
-              as='li'
-              className='flex items-center cursor-pointer'
-              renderPopover={
-                <div className='bg-white relative shadow-md rounded-sm border border-gray-100 overflow-hidden'>
-                  <div className='flex flex-col w-[160px]'>
-                    <Link to={'/!'} className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'>
-                      Tài khoản của tôi
-                    </Link>
-                    <Link to={'/!'} className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'>
-                      Đơn mua
-                    </Link>
-                    <button className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'>
-                      Đăng xuất
-                    </button>
+            {isAuthenticated && (
+              <Popover
+                as='li'
+                className='flex items-center cursor-pointer'
+                renderPopover={
+                  <div className='bg-white relative shadow-md rounded-sm border border-gray-100 overflow-hidden'>
+                    <div className='flex flex-col w-[160px]'>
+                      <Link
+                        to={'/profile'}
+                        className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'
+                      >
+                        Tài khoản của tôi
+                      </Link>
+                      <Link to={'/!'} className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'>
+                        Đơn mua
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'
+                      >
+                        Đăng xuất
+                      </button>
+                    </div>
                   </div>
-                </div>
-              }
-            >
-              <img
-                src='https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI4MDQwOTc0L29yaWdpbmFsX2ZmNGYxZjQzZDdiNzJjYzMxZDJlYjViMDgyN2ZmMWFjLnBuZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjoxMjAwLCJmaXQiOiJpbnNpZGUiLCJ3aXRob3V0RW5sYXJnZW1lbnQiOnRydWV9LCJ3ZWJwIjp7InF1YWxpdHkiOjkwfSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInJvdGF0ZSI6bnVsbH19?bc=0'
-                alt=''
-                className='w-5 h-5 inline-block rounded-[50%]'
-              />
-              <span className='ml-1 hover:text-gray-300'>Huỳnh Tấn Năng</span>
-            </Popover>
+                }
+              >
+                <img
+                  src='https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI4MDQwOTc0L29yaWdpbmFsX2ZmNGYxZjQzZDdiNzJjYzMxZDJlYjViMDgyN2ZmMWFjLnBuZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjoxMjAwLCJmaXQiOiJpbnNpZGUiLCJ3aXRob3V0RW5sYXJnZW1lbnQiOnRydWV9LCJ3ZWJwIjp7InF1YWxpdHkiOjkwfSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInJvdGF0ZSI6bnVsbH19?bc=0'
+                  alt=''
+                  className='w-5 h-5 inline-block rounded-[50%]'
+                />
+                <span className='ml-1 hover:text-gray-300'>Huỳnh Tấn Năng</span>
+              </Popover>
+            )}
+            {!isAuthenticated && (
+              <li className='flex items-center'>
+                <Link to={'/register'} className=' px-3 capitalize hover:text-white/70 border-r border-r-gray-300'>
+                  Đăng kí
+                </Link>
+                <Link to={'/login'} className=' px-3 capitalize hover:text-white/70 '>
+                  Đăng nhập
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
         <div className='grid grid-cols-12 gap-4 justify-between h-[84px]'>

@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 const RegisterHeader = () => {
+  const registerMatch = useMatch('/register')
+  const isRegister = Boolean(registerMatch)
   return (
     <header className='h-[84px]'>
       <div className='h-[84px] container flex justify-between items-center'>
@@ -12,7 +14,7 @@ const RegisterHeader = () => {
               </g>
             </svg>
           </Link>
-          <span className='ml-4 text-[24px] mb-[3px]'>Đăng nhập</span>
+          <span className='ml-4 text-[24px] mb-[3px]'>{isRegister ? 'Đăng Kí' : 'Đăng Nhập'}</span>
         </nav>
         <div>
           <Link to={'/!'} className='text-[#ee4d2d] block text-[14px] '>
