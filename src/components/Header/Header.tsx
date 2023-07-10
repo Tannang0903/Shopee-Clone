@@ -130,7 +130,7 @@ const Header = () => {
         </nav>
         <div className='grid grid-cols-12 gap-4 justify-between h-[84px]'>
           <div className='col-span-2 flex items-center'>
-            <Link to={path.home} className=' block w-36 pl-[6px]'>
+            <Link to={path.home} className=' block w-full pl-[6px]'>
               <svg viewBox='0 0 192 65' className=''>
                 <g fillRule='evenodd'>
                   <path
