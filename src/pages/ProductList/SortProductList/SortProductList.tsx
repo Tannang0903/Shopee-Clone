@@ -3,7 +3,7 @@ import Popover from 'src/components/Popover'
 
 const SortProductList = () => {
   return (
-    <div className='flex justify-between px-6 py-3 bg-[#ededed]'>
+    <div className='flex justify-between px-6 py-3 bg-[#ededed] rounded-sm'>
       <div className='flex items-center  my-auto'>
         <h3 className=' my-auto mr-4'>Sắp xếp theo</h3>
         <Button className='capitalize px-4 py-[6px] mr-2 bg-orange hover:bg-orange/80 text-white rounded-sm shadow-sm text-sm'>

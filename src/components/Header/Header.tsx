@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
 import { useMutation } from '@tanstack/react-query'
-import { logout } from 'src/apis/auth.api'
+import authAPI from 'src/apis/auth.api'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import { getAccessTokenFromLS } from 'src/utils/auth'
@@ -11,7 +11,7 @@ const Header = () => {
   const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
 
   const logoutMutation = useMutation({
-    mutationFn: (token: string) => logout(token),
+    mutationFn: (token: string) => authAPI.logout(token),
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)

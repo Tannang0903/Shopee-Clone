@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterSchema, RegisterSchemaType } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
-import { registerAccount } from 'src/apis/auth.api'
+import authAPI from 'src/apis/auth.api'
 import { omit } from 'lodash'
 import { isAxiosUnprocessableEntity } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
@@ -27,7 +27,7 @@ const Register = () => {
 
   const registerAccountMutation = useMutation({
     mutationFn: (body: Omit<RegisterSchemaType, 'confirm_password'>) => {
-      return registerAccount(body)
+      return authAPI.registerAccount(body)
     }
   })
 

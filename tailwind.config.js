@@ -24,6 +24,7 @@ module.exports = {
           marginRight: 'auto'
         }
       })
-    })
+    }),
+    require('@tailwindcss/line-clamp')
   ]
 }
