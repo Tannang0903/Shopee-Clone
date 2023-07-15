@@ -31,6 +31,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.2",
     "@types/node": "^20.3.3",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",

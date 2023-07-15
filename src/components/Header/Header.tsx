@@ -25,21 +25,21 @@ const Header = () => {
 
   return (
     <header className='h-[120px] bg-gradient-to-b from-[#f53d2d] to-[#f63]'>
-      <div className='container text-[14px] leading-4 text-white font-light'>
-        <nav className='flex justify-between items-center h-[36px]'>
+      <div className='container text-[14px] font-light leading-4 text-white'>
+        <nav className='flex h-[36px] items-center justify-between'>
           <ul className='flex'>
             <li>
-              <Link to={'/!'} className='block border-r-[2px] pr-2 capitalize border-gray-100/40 hover:text-gray-300'>
+              <Link to={'/!'} className='block border-r-[2px] border-gray-100/40 pr-2 capitalize hover:text-gray-300'>
                 Kênh người bán
               </Link>
             </li>
             <li>
-              <Link to={'/!'} className='block border-r-[2px] px-2 border-gray-100/40 hover:text-gray-300'>
+              <Link to={'/!'} className='block border-r-[2px] border-gray-100/40 px-2 hover:text-gray-300'>
                 Tải ứng dụng
               </Link>
             </li>
             <li className='flex'>
-              <span className='px-2 border-gray-100/40'>Kết nối</span>
+              <span className='border-gray-100/40 px-2'>Kết nối</span>
               <a href='https://www.facebook.com/ShopeeVN' className='mr-2' target='_blank' rel='noreferrer'>
                 <i className='fa-brands fa-facebook' />
               </a>
@@ -52,7 +52,7 @@ const Header = () => {
             <li>
               <Link to={'/!'} className='block hover:text-gray-300'>
                 <i className='fa-regular fa-bell'></i>
-                <span className='mr-3 ml-1 capitalize'>Thông báo</span>
+                <span className='ml-1 mr-3 capitalize'>Thông báo</span>
               </Link>
             </li>
             <li>
@@ -63,44 +63,44 @@ const Header = () => {
                 className='block hover:text-gray-300'
               >
                 <i className='fa-regular fa-circle-question'></i>
-                <span className='mr-3 ml-1 capitalize'>Hỗ trợ </span>
+                <span className='ml-1 mr-3 capitalize'>Hỗ trợ </span>
               </a>
             </li>
             <Popover
               as='li'
-              className='flex items-center mr-3 hover:text-gray-300 cursor-pointer'
+              className='mr-3 flex cursor-pointer items-center hover:text-gray-300'
               renderPopover={
-                <div className='bg-white relative shadow-md rounded-sm overflow-hidden'>
-                  <div className='flex flex-col w-[160px]'>
-                    <button className='py-2 px-4 hover:text-orange text-left'>Tiếng Việt</button>
-                    <button className='py-2 px-4 hover:text-orange text-left'>English</button>
+                <div className='relative overflow-hidden rounded-sm bg-white shadow-md'>
+                  <div className='flex w-[160px] flex-col'>
+                    <button className='px-4 py-2 text-left hover:text-orange'>Tiếng Việt</button>
+                    <button className='px-4 py-2 text-left hover:text-orange'>English</button>
                   </div>
                 </div>
               }
             >
               <i className='fa-solid fa-globe'></i>
-              <span className='mr-1 ml-1 capitalize'>Tiếng Việt</span>
+              <span className='ml-1 mr-1 capitalize'>Tiếng Việt</span>
               <i className='fa-solid fa-angle-down'></i>
             </Popover>
             {isAuthenticated && (
               <Popover
                 as='li'
-                className='flex items-center cursor-pointer'
+                className='flex cursor-pointer items-center'
                 renderPopover={
-                  <div className='bg-white relative shadow-md rounded-sm border border-gray-100 overflow-hidden'>
-                    <div className='flex flex-col w-[160px]'>
+                  <div className='relative overflow-hidden rounded-sm border border-gray-100 bg-white shadow-md'>
+                    <div className='flex w-[160px] flex-col'>
                       <Link
                         to={path.profile}
-                        className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'
+                        className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'
                       >
                         Tài khoản của tôi
                       </Link>
-                      <Link to={'/!'} className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'>
+                      <Link to={'/!'} className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'>
                         Đơn mua
                       </Link>
                       <button
                         onClick={handleLogout}
-                        className='block py-2 px-4 hover:text-emerald-400 hover:bg-gray-100 text-left'
+                        className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'
                       >
                         Đăng xuất
                       </button>
@@ -111,14 +111,14 @@ const Header = () => {
                 <img
                   src='https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI4MDQwOTc0L29yaWdpbmFsX2ZmNGYxZjQzZDdiNzJjYzMxZDJlYjViMDgyN2ZmMWFjLnBuZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjoxMjAwLCJmaXQiOiJpbnNpZGUiLCJ3aXRob3V0RW5sYXJnZW1lbnQiOnRydWV9LCJ3ZWJwIjp7InF1YWxpdHkiOjkwfSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInJvdGF0ZSI6bnVsbH19?bc=0'
                   alt=''
-                  className='w-5 h-5 inline-block rounded-[50%]'
+                  className='inline-block h-5 w-5 rounded-[50%]'
                 />
                 <span className='ml-1 hover:text-gray-300'>{profile?.email}</span>
               </Popover>
             )}
             {!isAuthenticated && (
               <li className='flex items-center'>
-                <Link to={path.register} className=' px-3 capitalize hover:text-white/70 border-r border-r-gray-300'>
+                <Link to={path.register} className=' border-r border-r-gray-300 px-3 capitalize hover:text-white/70'>
                   Đăng kí
                 </Link>
                 <Link to={path.login} className=' px-3 capitalize hover:text-white/70 '>
@@ -128,7 +128,7 @@ const Header = () => {
             )}
           </ul>
         </nav>
-        <div className='grid grid-cols-12 gap-4 justify-between h-[84px]'>
+        <div className='grid h-[84px] grid-cols-12 justify-between gap-4'>
           <div className='col-span-2 flex items-center'>
             <Link to={path.home} className=' block w-full pl-[6px]'>
               <svg viewBox='0 0 192 65' className=''>
@@ -145,81 +145,81 @@ const Header = () => {
             <div className='relative'>
               <input
                 type='text'
-                className='rounded-sm h-[40px] bg-white w-full px-4 font-light text-gray-800'
+                className='h-[40px] w-full rounded-sm bg-white px-4 font-light text-gray-800'
                 placeholder='Tìm kiếm sản phẩm'
               />
-              <button className='absolute right-[3px] top-[3px] px-[22px] py-[7px] bg-[#fb5533] hover:bg-[#fe6141] rounded-sm'>
-                <i className='fa-solid fa-magnifying-glass text-white text-sm' />
+              <button className='absolute right-[3px] top-[3px] rounded-sm bg-[#fb5533] px-[22px] py-[7px] hover:bg-[#fe6141]'>
+                <i className='fa-solid fa-magnifying-glass text-sm text-white' />
               </button>
             </div>
           </form>
           <Popover
             className='col-span-2 m-auto'
             renderPopover={
-              <div className='w-[400px] border bg-white border-gray-200 rounded shadow relative'>
-                <h4 className='text-left text-sm p-2 text-[#a1a1a1] font-light'>Sản phẩm mới thêm</h4>
+              <div className='relative w-[400px] rounded border border-gray-200 bg-white shadow'>
+                <h4 className='p-2 text-left text-sm font-light text-[#a1a1a1]'>Sản phẩm mới thêm</h4>
                 <ul>
-                  <li className='flex mt-4 px-2'>
+                  <li className='mt-4 flex px-2'>
                     <div className='flex-shrink-0'>
-                      <img src='' alt='' className='w-11 h-11 border-spacing-1 border-gray-200' />
+                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
                     </div>
-                    <div className='flex-grow mx-2 overflow-hidden '>
+                    <div className='mx-2 flex-grow overflow-hidden '>
                       <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
                     </div>
                     <div className='flex-shrink-0'>
-                      <div className=' text-orange text-sm'>30000đ</div>
+                      <div className=' text-sm text-orange'>30000đ</div>
                     </div>
                   </li>
-                  <li className='flex mt-4 px-2'>
+                  <li className='mt-4 flex px-2'>
                     <div className='flex-shrink-0'>
-                      <img src='' alt='' className='w-11 h-11 border-spacing-1 border-gray-200' />
+                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
                     </div>
-                    <div className='flex-grow mx-2 overflow-hidden '>
+                    <div className='mx-2 flex-grow overflow-hidden '>
                       <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
                     </div>
                     <div className='flex-shrink-0'>
-                      <div className=' text-orange text-sm'>30000đ</div>
+                      <div className=' text-sm text-orange'>30000đ</div>
                     </div>
                   </li>
-                  <li className='flex mt-4 px-2'>
+                  <li className='mt-4 flex px-2'>
                     <div className='flex-shrink-0'>
-                      <img src='' alt='' className='w-11 h-11 border-spacing-1 border-gray-200' />
+                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
                     </div>
-                    <div className='flex-grow mx-2 overflow-hidden '>
+                    <div className='mx-2 flex-grow overflow-hidden '>
                       <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
                     </div>
                     <div className='flex-shrink-0'>
-                      <div className=' text-orange text-sm'>30000đ</div>
+                      <div className=' text-sm text-orange'>30000đ</div>
                     </div>
                   </li>
-                  <li className='flex mt-4 px-2'>
+                  <li className='mt-4 flex px-2'>
                     <div className='flex-shrink-0'>
-                      <img src='' alt='' className='w-11 h-11 border-spacing-1 border-gray-200' />
+                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
                     </div>
-                    <div className='flex-grow mx-2 overflow-hidden '>
+                    <div className='mx-2 flex-grow overflow-hidden '>
                       <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
                     </div>
                     <div className='flex-shrink-0'>
-                      <div className=' text-orange text-sm'>30000đ</div>
+                      <div className=' text-sm text-orange'>30000đ</div>
                     </div>
                   </li>
                 </ul>
-                <div className='flex justify-end mt-4 mb-2'>
-                  <Link to={'/!'} className='px-2 py-1 bg-[#fb5a24] rounded-sm shadow-sm mr-2 text-white'>
+                <div className='mb-2 mt-4 flex justify-end'>
+                  <Link to={'/!'} className='mr-2 rounded-sm bg-[#fb5a24] px-2 py-1 text-white shadow-sm'>
                     Xem giỏ hàng
                   </Link>
                 </div>
               </div>
             }
           >
-            <Link to={'/cart'} className=' block text-white p-2'>
+            <Link to={'/cart'} className=' block p-2 text-white'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'
                 strokeWidth={1.5}
                 stroke='currentColor'
-                className='w-6 h-6'
+                className='h-6 w-6'
               >
                 <path
                   strokeLinecap='round'

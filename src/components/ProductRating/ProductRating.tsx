@@ -1,6 +1,12 @@
 import classNames from 'classnames'
 
-const ProductRating = ({ rating }: { rating: number }) => {
+interface Props {
+  rating: number
+  size: string
+  color: string
+}
+
+const ProductRating = ({ rating, size, color }: Props) => {
   const handleRate = (order: number) => {
     if (order <= rating) {
       return '100%'
@@ -17,16 +23,10 @@ const ProductRating = ({ rating }: { rating: number }) => {
         .map((_, index) => (
           <div className='relative' key={index}>
             <div
-              className={classNames(`absolute top-0 left-0 h-full overflow-hidden z-10`)}
+              className={classNames(`absolute left-0 top-0 z-10 h-full overflow-hidden`)}
               style={{ width: handleRate(index + 1) }}
             >
-              <svg
-                enableBackground='new 0 0 15 15'
-                viewBox='0 0 15 15'
-                x={0}
-                y={0}
-                className='w-3 h-3 text-yellow-300 fill-yellow-300'
-              >
+              <svg enableBackground='new 0 0 15 15' viewBox='0 0 15 15' x={0} y={0} className={`${size} ${color}`}>
                 <polygon
                   points='7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4'
                   strokeLinecap='round'
@@ -40,7 +40,7 @@ const ProductRating = ({ rating }: { rating: number }) => {
               viewBox='0 0 15 15'
               x={0}
               y={0}
-              className='w-3 h-3 text-gray-100 fill-current'
+              className={`${size} fill-current text-gray-300`}
             >
               <polygon
                 points='7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4'

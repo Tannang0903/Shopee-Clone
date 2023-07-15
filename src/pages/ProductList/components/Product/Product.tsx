@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import ProductRating from 'src/components/ProductRating'
+import path from 'src/constants/path'
 import { Product as ProductType } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
 
@@ -9,22 +10,25 @@ interface Props {
 
 const Product = ({ product }: Props) => {
   return (
-    <Link to={'/!'} className='bg-white rounded-sm shadow-sm block overflow-hidden hover:translate-y-[-2px]'>
-      <div className='w-full pt-[100%] relative'>
-        <img src={product.image} alt={product.name} className='object-cover absolute top-0 left-0 h-full w-full' />
+    <Link
+      to={`${path.home}${product._id}`}
+      className='block overflow-hidden rounded-sm bg-white shadow-sm hover:translate-y-[-2px]'
+    >
+      <div className='relative w-full pt-[100%]'>
+        <img src={product.image} alt={product.name} className='absolute left-0 top-0 h-full w-full object-cover' />
       </div>
       <div className='p-3'>
         <div className='overflow-hidden'>
-          <p className='text-xs line-clamp-2 min-h-[32px]'>{product.name}</p>
+          <p className='min-h-[32px] text-xs line-clamp-2'>{product.name}</p>
         </div>
-        <div className='flex my-4 text-sm '>
-          <span className='text-gray-500 line-through mr-2 truncate max-w-[50%]'>
+        <div className='my-4 flex text-sm '>
+          <span className='mr-2 max-w-[50%] truncate text-gray-500 line-through'>
             {formatCurrency(product.price_before_discount)}
           </span>
           <span className='text-orange'>{formatCurrency(product.price)}</span>
         </div>
         <div className='flex items-center'>
-          <ProductRating rating={product.rating} />
+          <ProductRating rating={product.rating} size='h-3 w-3' color='fill-yellow-300 text-yellow-300' />
           <div className='text-xs'>
             Đã bán <span>{formatNumberToSocialStyle(product.sold)}</span>
           </div>
