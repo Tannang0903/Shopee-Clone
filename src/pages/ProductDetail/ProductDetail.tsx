@@ -1,39 +1,102 @@
 /* eslint-disable import/no-unresolved */
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productAPI from 'src/apis/product.api'
 import ProductRating from 'src/components/ProductRating'
+import { Product } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
 
 const ProductDetail = () => {
   const { id } = useParams()
+
   const ProductQuery = useQuery({
     queryKey: ['product', id],
     queryFn: () => productAPI.getProductsDetail(id as string)
   })
+
   const product = ProductQuery.data?.data.data
+
+  const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
+  const [activeImage, setActiveImage] = useState('')
+
+  const imageRef = useRef(null)
+
+  const currentImages = useMemo(
+    () => (product ? product.images.slice(...currentIndexImages) : []),
+    [product, currentIndexImages]
+  )
+
+  useEffect(() => {
+    if (product && product.images.length > 0) {
+      setActiveImage(product.images[0])
+    }
+  }, [product])
+
+  const chooseActiveImage = (image: string) => {
+    setActiveImage(image)
+  }
+
+  const nextSliderImage = () => {
+    if (currentIndexImages[1] < (product as Product)?.images.length) {
+      setCurrentIndexImages((prev) => [prev[0] + 1, prev[1] + 1])
+    }
+  }
+
+  const prevSliderImage = () => {
+    if (currentIndexImages[0] > 0) {
+      setCurrentIndexImages((prev) => [prev[0] - 1, prev[1] - 1])
+    }
+  }
+
+  const handleZoomImage = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const image = imageRef.current as unknown as HTMLImageElement
+    const { naturalHeight, naturalWidth } = image
+
+    const rect = event.currentTarget.getBoundingClientRect()
+    const { offsetX, offsetY } = event.nativeEvent
+    const top = offsetY * (1 - naturalHeight / rect.height)
+    const left = offsetX * (1 - naturalWidth / rect.width)
+
+    image.style.width = naturalWidth + 'px'
+    image.style.height = naturalHeight + 'px'
+    image.style.maxWidth = 'unset'
+    image.style.top = top + 'px'
+    image.style.left = left + 'px'
+  }
+
+  const handleRemoveZoomImage = () => (imageRef.current as unknown as HTMLImageElement)?.removeAttribute('style')
+
   if (!product) return null
 
   return (
     <div className='bg-gray-100 py-[60px]'>
       <div>
-        <div className='container grid grid-cols-12 gap-8 rounded bg-white p-4 shadow'>
+        <div className='container grid grid-cols-12 gap-8 rounded-sm bg-white p-4 shadow'>
           <div className='col-span-5'>
-            <div className='relative w-full pt-[100%] shadow'>
+            <div
+              onMouseMove={handleZoomImage}
+              onMouseLeave={handleRemoveZoomImage}
+              className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow'
+            >
               <img
-                src={product.image}
+                src={activeImage}
                 alt={product.name}
-                className='absolute left-0 top-0 h-full w-full bg-white object-contain'
+                className='pointer-events-none absolute left-0 top-0 h-full w-full bg-white object-contain'
+                ref={imageRef}
               />
             </div>
             <div className='relative mt-4 grid grid-cols-5 gap-2'>
-              <button className='absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded bg-black/20 px-2 py-1 text-white hover:bg-black/10'>
+              <button
+                onClick={prevSliderImage}
+                className='absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded bg-black/20 px-2 py-1 text-white hover:bg-black/10'
+              >
                 <i className='fa-solid fa-chevron-left'></i>
               </button>
-              {product.images.slice(0, 5).map((image, index) => {
-                const isActive = index === 0
+              {currentImages.map((image) => {
+                const isActive = image === activeImage
                 return (
-                  <div className='relative w-full pt-[100%] ' key={image}>
+                  <div className='relative w-full pt-[100%]' key={image} onMouseEnter={() => chooseActiveImage(image)}>
                     <img
                       src={image}
                       alt={product.name}
@@ -43,7 +106,10 @@ const ProductDetail = () => {
                   </div>
                 )
               })}
-              <button className='absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded bg-black/20 px-2 py-1 text-white hover:bg-black/10'>
+              <button
+                onClick={nextSliderImage}
+                className='absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded bg-black/20 px-2 py-1 text-white hover:bg-black/10'
+              >
                 <i className='fa-solid fa-chevron-right'></i>
               </button>
             </div>
@@ -122,7 +188,7 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className='container mt-6 grid grid-cols-12 gap-6'>
-          <div className='col-span-9 rounded bg-white p-6 shadow'>
+          <div className='col-span-9 rounded-sm bg-white p-6 shadow'>
             <h3 className='rounded-sm bg-gray-100/50 px-4 py-2 text-[18px] uppercase shadow-sm'>Mô tả sản phẩm</h3>
             <div className='mt-8 text-[13px]'>
               <div
@@ -132,7 +198,7 @@ const ProductDetail = () => {
               ></div>
             </div>
           </div>
-          <div className='col-span-3 rounded bg-white p-6 shadow'>
+          <div className='col-span-3 rounded-sm bg-white p-6 shadow'>
             <h4>Top sản phẩm bán chạy</h4>
           </div>
         </div>
