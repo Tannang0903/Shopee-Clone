@@ -38,3 +38,32 @@ export const LoginSchema = yup.object({
 })
 
 export type LoginSchemaType = yup.InferType<typeof LoginSchema>
+
+export const InputNumberSchema = yup.object({
+  price_min: yup.string().test({
+    name: 'price_not_allowed',
+    message: 'Giá không phù hợp',
+    test: function (value) {
+      const price_min = value
+      const { price_max } = this.parent as { price_min: string; price_max: string }
+      if (price_min !== '' && price_max !== '') {
+        return Number(price_max) >= Number(price_min)
+      }
+      return price_min !== '' || price_max !== ''
+    }
+  }),
+  price_max: yup.string().test({
+    name: 'price_not_allowed',
+    message: 'Giá không phù hợp',
+    test: function (value) {
+      const price_max = value
+      const { price_min } = this.parent as { price_min: string; price_max: string }
+      if (price_min !== '' && price_max !== '') {
+        return Number(price_max) >= Number(price_min)
+      }
+      return price_min !== '' || price_max !== ''
+    }
+  })
+})
+
+export type InputNumberType = yup.InferType<typeof InputNumberSchema>

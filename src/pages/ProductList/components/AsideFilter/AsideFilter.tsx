@@ -1,17 +1,53 @@
-import { Link, createSearchParams } from 'react-router-dom'
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import { Category } from 'src/types/category.type'
 import { QueryConfig } from '../../ProductList'
 import classNames from 'classnames'
 import path from 'src/constants/path'
-
+import InputNumber from 'src/components/InputNumber'
+import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { InputNumberSchema } from 'src/utils/rules'
 interface Props {
   queryConfig: QueryConfig
   categories: Category[]
 }
 
+type FormData = {
+  price_min: string | undefined
+  price_max: string | undefined
+}
+
 const AsideFilter = ({ queryConfig, categories }: Props) => {
   const { category } = queryConfig
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    trigger
+  } = useForm<FormData>({
+    defaultValues: {
+      price_min: '',
+      price_max: ''
+    },
+    resolver: yupResolver(InputNumberSchema),
+    shouldFocusError: false
+  })
+
+  const navigate = useNavigate()
+
+  const onsubmit = handleSubmit((data) => {
+    navigate({
+      pathname: path.home,
+      search: createSearchParams({
+        ...queryConfig,
+        price_max: data.price_max as string,
+        price_min: data.price_min as string
+      }).toString()
+    })
+  })
+
   return (
     <div className=''>
       <Link
@@ -59,21 +95,54 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
       </div>
       <div className='border-b-[1px] border-gray-300/80 py-[20px]'>
         <h4 className='pb-[12px] text-[16px] text-gray-700'>Khoảng giá</h4>
-        <form>
+        <form onSubmit={onsubmit}>
           <div className='grid grid-cols-5'>
-            <input
-              type='text'
-              placeholder='Từ'
-              className='col-span-2 rounded-sm border border-gray-300 py-1 text-center text-[13px] font-light uppercase text-gray-500 outline-none'
+            <Controller
+              control={control}
+              name='price_min'
+              render={({ field }) => {
+                return (
+                  <InputNumber
+                    type='text'
+                    placeholder='Từ'
+                    className='col-span-2'
+                    classNameInput='w-full rounded-sm border border-gray-300 py-1 text-center text-[13px] font-light uppercase text-gray-500 outline-none'
+                    onChange={(event) => {
+                      field.onChange(event)
+                      trigger('price_max')
+                    }}
+                    value={field.value}
+                    ref={field.ref}
+                  />
+                )
+              }}
             />
-            <div className='col-span-1 text-center text-gray-400'>-</div>
-            <input
-              type='text'
-              placeholder='đến'
-              className='col-span-2 rounded-sm border border-gray-300 py-1 text-center text-[13px] font-light uppercase text-gray-500 outline-none'
+            <div className='col-span-1 flex items-center justify-center text-[10px] text-gray-400'>
+              <i className='fa-solid fa-minus'></i>
+            </div>
+            <Controller
+              control={control}
+              name='price_max'
+              render={({ field }) => {
+                return (
+                  <InputNumber
+                    type='text'
+                    placeholder='Đến'
+                    className='col-span-2'
+                    classNameInput='w-full rounded-sm border border-gray-300 py-1 text-center text-[13px] font-light uppercase text-gray-500 outline-none'
+                    onChange={(event) => {
+                      field.onChange(event)
+                      trigger('price_min')
+                    }}
+                    value={field.value}
+                    ref={field.ref}
+                  />
+                )
+              }}
             />
           </div>
-          <Button className='mt-[16px] w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white shadow-sm hover:bg-orange/80'>
+          <div className=' min-h-[28px] text-center text-[13px] text-red-600'>{errors.price_min?.message}</div>
+          <Button className=' w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white shadow-sm hover:bg-orange/80'>
             Áp dụng
           </Button>
         </form>
