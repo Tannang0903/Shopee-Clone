@@ -8,6 +8,8 @@ import InputNumber from 'src/components/InputNumber'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { InputNumberSchema } from 'src/utils/rules'
+import RatingStar from '../RatingStar'
+import { omit } from 'lodash'
 interface Props {
   queryConfig: QueryConfig
   categories: Category[]
@@ -47,6 +49,13 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
       }).toString()
     })
   })
+
+  const handleRemoveAllFilter = () => {
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category'])).toString()
+    })
+  }
 
   return (
     <div className=''>
@@ -149,29 +158,12 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
       </div>
       <div className='border-b-[1px] border-gray-300/80 py-[20px]'>
         <h4 className='pb-[12px] text-[16px] text-gray-700'>Đánh giá</h4>
-        <ul className='pl-2'>
-          <li className='mt-2'>
-            <Link to={'/!'} className='text-sm text-[#efc243]'>
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-            </Link>
-          </li>
-          <li className='mt-2 flex items-center'>
-            <Link to={'/!'} className='mr-2 flex text-sm text-[#efc243]'>
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-              <i className='fa-solid fa-star' />
-              <i className='fa-regular fa-star'></i>
-            </Link>
-            <span>trở lên</span>
-          </li>
-        </ul>
+        <RatingStar queryConfig={queryConfig} />
       </div>
-      <Button className='mt-[20px] w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white shadow-sm hover:bg-orange/80'>
+      <Button
+        onClick={handleRemoveAllFilter}
+        className='mt-[20px] w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white shadow-sm hover:bg-orange/80'
+      >
         Xóa tất cả
       </Button>
     </div>
