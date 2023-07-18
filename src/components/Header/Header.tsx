@@ -1,13 +1,29 @@
-import { Link } from 'react-router-dom'
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
 import { useMutation } from '@tanstack/react-query'
 import authAPI from 'src/apis/auth.api'
 import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
 import { AppContext } from 'src/contexts/app.context'
 import { getAccessTokenFromLS } from 'src/utils/auth'
 import path from 'src/constants/path'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { InputSearchSchema, InputSearchType } from 'src/utils/rules'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { omit } from 'lodash'
 
 const Header = () => {
+  const queryConfig = useQueryConfig()
+
+  const { register, handleSubmit } = useForm<InputSearchType>({
+    defaultValues: {
+      name: ''
+    },
+    resolver: yupResolver(InputSearchSchema)
+  })
+
+  const navigate = useNavigate()
+
   const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
 
   const logoutMutation = useMutation({
@@ -22,6 +38,25 @@ const Header = () => {
     const token = getAccessTokenFromLS().split(' ')[1]
     logoutMutation.mutate(token)
   }
+
+  const handleSubmitSearchProduct = handleSubmit((data) => {
+    const config = queryConfig.order
+      ? omit(
+          {
+            ...queryConfig,
+            name: data.name
+          },
+          ['order', 'sort_by']
+        )
+      : omit({
+          ...queryConfig,
+          name: data.name
+        })
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(config).toString()
+    })
+  })
 
   return (
     <header className='h-[120px] bg-gradient-to-b from-[#f53d2d] to-[#f63]'>
@@ -141,12 +176,13 @@ const Header = () => {
               </svg>
             </Link>
           </div>
-          <form className='col-span-8 my-auto'>
+          <form className='col-span-8 my-auto' onSubmit={handleSubmitSearchProduct}>
             <div className='relative'>
               <input
                 type='text'
                 className='h-[40px] w-full rounded-sm bg-white px-4 font-light text-gray-800'
                 placeholder='Tìm kiếm sản phẩm'
+                {...register('name')}
               />
               <button className='absolute right-[3px] top-[3px] rounded-sm bg-[#fb5533] px-[22px] py-[7px] hover:bg-[#fe6141]'>
                 <i className='fa-solid fa-magnifying-glass text-sm text-white' />

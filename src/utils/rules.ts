@@ -66,4 +66,8 @@ export const InputNumberSchema = yup.object({
   })
 })
 
-export type InputNumberType = yup.InferType<typeof InputNumberSchema>
+export const InputSearchSchema = yup.object({
+  name: yup.string().trim().required()
+})
+
+export type InputSearchType = yup.InferType<typeof InputSearchSchema>
