@@ -1,6 +1,6 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import authAPI from 'src/apis/auth.api'
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
@@ -11,6 +11,9 @@ import useQueryConfig from 'src/hooks/useQueryConfig'
 import { InputSearchSchema, InputSearchType } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
+import { purchasesStatus } from 'src/constants/purchase'
+import purchaseAPI from 'src/apis/purchase.api'
+import { formatCurrency } from 'src/utils/utils'
 
 const Header = () => {
   const queryConfig = useQueryConfig()
@@ -33,6 +36,13 @@ const Header = () => {
       setProfile(null)
     }
   })
+
+  // khi chúng ta chuyển trang thì Header chỉ bị re-render không bị unmount
+  const PurchasesInCartQuery = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.inCart }],
+    queryFn: () => purchaseAPI.getPurchases({ status: purchasesStatus.inCart })
+  })
+  const purchasesInCart = PurchasesInCartQuery.data?.data.data
 
   const handleLogout = () => {
     const token = getAccessTokenFromLS().split(' ')[1]
@@ -237,40 +247,52 @@ const Header = () => {
             className='col-span-2 m-auto'
             renderPopover={
               <div className='relative w-[400px] rounded border border-gray-200 bg-white shadow'>
-                <h4 className='p-2 text-left text-sm font-light text-[#a1a1a1]'>Sản phẩm mới thêm</h4>
-                <ul>
-                  <li className='mt-4 flex px-2'>
-                    <div className='flex-shrink-0'>
-                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
+                {purchasesInCart ? (
+                  <div>
+                    <h4 className='p-2 text-left text-sm font-light text-[#a1a1a1]'>Sản phẩm mới thêm</h4>
+                    <ul>
+                      {purchasesInCart &&
+                        purchasesInCart.slice(0, 5).map((purchase) => (
+                          <li className='grid grid-cols-12 px-2 py-2 hover:bg-gray-100/50' key={purchase._id}>
+                            <div className='col-span-2'>
+                              <img
+                                src={purchase.product.image}
+                                alt={purchase.product.name}
+                                className='h-11 w-11 border-spacing-1 border-gray-200 shadow-sm'
+                              />
+                            </div>
+                            <div className='col-span-7 overflow-hidden'>
+                              <div className='truncate text-sm'>{purchase.product.name}</div>
+                            </div>
+                            <div className='col-span-3 text-right'>
+                              <span className=' text-sm text-orange'>{formatCurrency(purchase.product.price)}</span>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                    <div className='mb-2 ml-2 mt-4 flex items-center justify-between '>
+                      <div className='text-sm capitalize text-gray-500'>
+                        {purchasesInCart.length > 5 ? purchasesInCart.length - 5 : ''} Thêm hàng vào giỏ
+                      </div>
+                      <Link to={'/!'} className='mr-2 rounded-sm bg-[#fb5a24] px-2 py-1 text-white shadow-sm'>
+                        Xem giỏ hàng
+                      </Link>
                     </div>
-                    <div className='mx-2 flex-grow overflow-hidden '>
-                      <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
-                    </div>
-                    <div className='flex-shrink-0'>
-                      <div className=' text-sm text-orange'>30000đ</div>
-                    </div>
-                  </li>
-                  <li className='mt-4 flex px-2'>
-                    <div className='flex-shrink-0'>
-                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
-                    </div>
-                    <div className='mx-2 flex-grow overflow-hidden '>
-                      <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
-                    </div>
-                    <div className='flex-shrink-0'>
-                      <div className=' text-sm text-orange'>30000đ</div>
-                    </div>
-                  </li>
-                </ul>
-                <div className='mb-2 mt-4 flex justify-end'>
-                  <Link to={'/!'} className='mr-2 rounded-sm bg-[#fb5a24] px-2 py-1 text-white shadow-sm'>
-                    Xem giỏ hàng
-                  </Link>
-                </div>
+                  </div>
+                ) : (
+                  <div className='z-20 p-8 text-center'>
+                    <img
+                      src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/9bdd8040b334d31946f49e36beaf32db.png'
+                      alt=''
+                      className='mx-auto w-1/2 p-2'
+                    />
+                    <span className='text-[16px] text-gray-500'>Chưa có sản phẩm</span>
+                  </div>
+                )}
               </div>
             }
           >
-            <Link to={'/cart'} className=' block p-2 text-white'>
+            <Link to={'/cart'} className=' relative block p-2 text-white'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
@@ -285,6 +307,9 @@ const Header = () => {
                   d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                 />
               </svg>
+              <span className='absolute right-[-6px] top-[-2px] rounded-[20px] border-[2px] border-orange bg-white px-[8px] py-[1px] text-[11px] font-medium text-orange'>
+                {purchasesInCart && purchasesInCart.length}
+              </span>
             </Link>
           </Popover>
         </div>

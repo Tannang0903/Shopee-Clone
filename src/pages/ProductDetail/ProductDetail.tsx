@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productAPI from 'src/apis/product.api'
@@ -7,9 +7,15 @@ import ProductRating from 'src/components/ProductRating'
 import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
 import Product from '../ProductList/components/Product'
+import QuantityController from 'src/components/QuantityController'
+import purchaseAPI from 'src/apis/purchase.api'
+import { purchasesStatus } from 'src/constants/purchase'
+import { toast } from 'react-toastify'
 
 const ProductDetail = () => {
   const { id } = useParams()
+
+  const [buyCount, setBuyCount] = useState<number>(1)
 
   const ProductQuery = useQuery({
     queryKey: ['product', id],
@@ -25,6 +31,10 @@ const ProductDetail = () => {
     staleTime: 3 * 60 * 1000
   })
   const productsData = ProductListQuery.data
+
+  const addToCartMutation = useMutation(purchaseAPI.addToCart)
+
+  const queryClient = useQueryClient()
 
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
@@ -74,7 +84,25 @@ const ProductDetail = () => {
     image.style.left = left + 'px'
   }
 
+  const handleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
+
   const handleRemoveZoomImage = () => (imageRef.current as unknown as HTMLImageElement)?.removeAttribute('style')
+
+  const handleAddToCart = () => {
+    addToCartMutation.mutate(
+      { product_id: product?._id as string, buy_count: buyCount },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message)
+          queryClient.invalidateQueries({
+            queryKey: ['purchases', { status: purchasesStatus.inCart }]
+          })
+        }
+      }
+    )
+  }
 
   if (!product) return null
 
@@ -164,23 +192,13 @@ const ProductDetail = () => {
             <div className='mt-6 grid grid-cols-6'>
               <span className='col-span-1 ml-5 text-[14px] capitalize text-gray-500'>Số lượng</span>
               <div className='col-span-5 flex'>
-                <div className='flex'>
-                  <button
-                    type='button'
-                    className='flex h-[28px] w-[28px] items-center justify-center rounded-bl-sm rounded-tl-sm border border-gray-400/40'
-                  >
-                    <i className='fa-solid fa-minus text-[10px]'></i>
-                  </button>
-                  <div className='border-y border-gray-400/50'>
-                    <input type='text' value={1} className='w-[60px] text-center text-[14px] text-black outline-none' />
-                  </div>
-                  <button
-                    type='button'
-                    className='flex h-[28px] w-[28px] items-center justify-center rounded-br-sm rounded-tr-sm border border-gray-400/40'
-                  >
-                    <i className='fa-solid fa-plus text-[10px]'></i>
-                  </button>
-                </div>
+                <QuantityController
+                  onDecrease={handleBuyCount}
+                  onIncrease={handleBuyCount}
+                  onType={handleBuyCount}
+                  value={buyCount}
+                  max={product.quantity}
+                />
                 <div className='ml-5 text-[14px] text-gray-500'>
                   <span className='mr-1'>{product.quantity}</span>
                   <span>sản phẩm có sẵn</span>
@@ -188,7 +206,10 @@ const ProductDetail = () => {
               </div>
             </div>
             <div>
-              <button className='mx-5 mt-8 h-[48px] rounded-sm border border-orange bg-[#ffeee8] px-4 text-orange shadow-sm'>
+              <button
+                onClick={handleAddToCart}
+                className='mx-5 mt-8 h-[48px] rounded-sm border border-orange bg-[#ffeee8] px-4 text-orange shadow-sm'
+              >
                 <i className='fa-solid fa-cart-plus'></i>
                 <span className='ml-2'>Thêm vào giỏ hàng</span>
               </button>
