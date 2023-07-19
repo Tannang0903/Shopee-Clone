@@ -4,8 +4,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productAPI from 'src/apis/product.api'
 import ProductRating from 'src/components/ProductRating'
-import { Product } from 'src/types/product.type'
+import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
+import Product from '../ProductList/components/Product'
 
 const ProductDetail = () => {
   const { id } = useParams()
@@ -14,8 +15,16 @@ const ProductDetail = () => {
     queryKey: ['product', id],
     queryFn: () => productAPI.getProductsDetail(id as string)
   })
-
   const product = ProductQuery.data?.data.data
+
+  const queryConfig: ProductListConfig = { limit: '10', page: '1', category: product?.category._id }
+  const ProductListQuery = useQuery({
+    queryKey: ['products', queryConfig],
+    queryFn: () => productAPI.getProducts(queryConfig as ProductListConfig),
+    enabled: Boolean(product),
+    staleTime: 3 * 60 * 1000
+  })
+  const productsData = ProductListQuery.data
 
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
@@ -38,7 +47,7 @@ const ProductDetail = () => {
   }
 
   const nextSliderImage = () => {
-    if (currentIndexImages[1] < (product as Product)?.images.length) {
+    if (currentIndexImages[1] < (product as ProductType)?.images.length) {
       setCurrentIndexImages((prev) => [prev[0] + 1, prev[1] + 1])
     }
   }
@@ -117,10 +126,10 @@ const ProductDetail = () => {
           <div className='col-span-7'>
             <div className='overflow-hidden'>
               <div className='min-h-[56px] text-start text-xl leading-8 line-clamp-2'>
-                <span className='mr-3 rounded-sm bg-orange px-2 py-[2px] text-xs text-white shadow-sm '>
-                  Yêu thích +
-                </span>
-                <span>{product.name}</span>
+                <div className='mr-3 inline-flex -translate-y-[12%] rounded-sm bg-orange px-2 py-[2px] text-xs text-white shadow-sm'>
+                  Yêu thích
+                </div>
+                <span className=''>{product.name}</span>
               </div>
             </div>
             <div className='mt-2 flex items-center'>
@@ -143,7 +152,7 @@ const ProductDetail = () => {
                 <span className='text-[14px] capitalize text-gray-500'>Đã bán</span>
               </div>
             </div>
-            <div className='mt-3 flex items-center bg-gray-100 px-5 py-5'>
+            <div className='mt-3 flex items-center bg-[#fafafa] px-5 py-5'>
               <span className=' text-[16px] text-gray-400 line-through'>
                 {formatCurrency(product.price_before_discount)}
               </span>
@@ -188,14 +197,28 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className='container mt-6 grid grid-cols-12 gap-6'>
-          <div className='col-span-9 rounded-sm bg-white p-6 shadow'>
-            <h3 className='rounded-sm bg-gray-100/50 px-4 py-2 text-[18px] uppercase shadow-sm'>Mô tả sản phẩm</h3>
-            <div className='mt-8 text-[13px]'>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: product.description
-                }}
-              ></div>
+          <div className='col-span-9'>
+            <div className='mb-6 rounded-sm bg-white p-6 shadow'>
+              <h3 className='rounded-sm bg-gray-100/50 px-4 py-2 text-[18px] uppercase shadow-sm'>Mô tả sản phẩm</h3>
+              <div className='mt-8 text-[13px]'>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: product.description
+                  }}
+                ></div>
+              </div>
+            </div>
+            <div>
+              <h3 className='rounded-sm text-[16px] uppercase'>Có thể bạn cũng thích</h3>
+              {productsData && (
+                <div className='mt-6 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+                  {ProductListQuery.data?.data.data.products.map((product) => (
+                    <div className='col-span-1' key={product._id}>
+                      <Product product={product} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className='col-span-3 rounded-sm bg-white p-6 shadow'>

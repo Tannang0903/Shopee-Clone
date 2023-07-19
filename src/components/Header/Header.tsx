@@ -64,15 +64,59 @@ const Header = () => {
         <nav className='flex h-[36px] items-center justify-between'>
           <ul className='flex'>
             <li>
-              <Link to={'/!'} className='block border-r-[2px] border-gray-100/40 pr-2 capitalize hover:text-gray-300'>
+              <a
+                href='https://banhang.shopee.vn/'
+                className='block border-r-[2px] border-gray-100/40 pr-2 capitalize hover:text-gray-300'
+                target='_blank'
+                rel='noreferrer'
+              >
                 Kênh người bán
-              </Link>
+              </a>
             </li>
-            <li>
-              <Link to={'/!'} className='block border-r-[2px] border-gray-100/40 px-2 hover:text-gray-300'>
+            <Popover
+              as='li'
+              className=''
+              renderPopover={
+                <div className='w-[180px] rounded-sm bg-white shadow-[rgba(50,_50,_105,_0.25)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]'>
+                  <div className=''>
+                    <img
+                      src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/d91264e165ed6facc6178994d5afae79.png'
+                      alt='QR code'
+                      className='w-full'
+                    />
+                  </div>
+                  <div className='flex flex-wrap items-center px-2 pb-3'>
+                    <div className='w-1/2 px-1 py-1'>
+                      <img
+                        src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/39f189e19764dab688d3850742f13718.png'
+                        alt='App store'
+                      />
+                    </div>
+                    <div className='w-1/2 px-1 py-1'>
+                      <img
+                        src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/f4f5426ce757aea491dce94201560583.png'
+                        alt='Google Play'
+                      />
+                    </div>
+                    <div className='w-1/2 px-1 py-1'>
+                      <img
+                        src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/1ae215920a31f2fc75b00d4ee9ae8551.png'
+                        alt='App Gallery'
+                      />
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              <a
+                href={'https://shopee.vn/web'}
+                target='_blank'
+                rel='noreferrer'
+                className='block border-r-[2px] border-gray-100/40 px-2 hover:text-gray-300'
+              >
                 Tải ứng dụng
-              </Link>
-            </li>
+              </a>
+            </Popover>
             <li className='flex'>
               <span className='border-gray-100/40 px-2'>Kết nối</span>
               <a href='https://www.facebook.com/ShopeeVN' className='mr-2' target='_blank' rel='noreferrer'>
@@ -148,7 +192,7 @@ const Header = () => {
                   alt=''
                   className='inline-block h-5 w-5 rounded-[50%]'
                 />
-                <span className='ml-1 hover:text-gray-300'>{profile?.email}</span>
+                <span className='ml-1 font-medium hover:text-gray-300'>{profile?.email}</span>
               </Popover>
             )}
             {!isAuthenticated && (
@@ -165,7 +209,7 @@ const Header = () => {
         </nav>
         <div className='grid h-[84px] grid-cols-12 justify-between gap-4'>
           <div className='col-span-2 flex items-center'>
-            <Link to={path.home} className=' block w-full pl-[6px]'>
+            <Link to={path.home} className=' block w-full px-[6px]'>
               <svg viewBox='0 0 192 65' className=''>
                 <g fillRule='evenodd'>
                   <path
@@ -195,28 +239,6 @@ const Header = () => {
               <div className='relative w-[400px] rounded border border-gray-200 bg-white shadow'>
                 <h4 className='p-2 text-left text-sm font-light text-[#a1a1a1]'>Sản phẩm mới thêm</h4>
                 <ul>
-                  <li className='mt-4 flex px-2'>
-                    <div className='flex-shrink-0'>
-                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
-                    </div>
-                    <div className='mx-2 flex-grow overflow-hidden '>
-                      <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
-                    </div>
-                    <div className='flex-shrink-0'>
-                      <div className=' text-sm text-orange'>30000đ</div>
-                    </div>
-                  </li>
-                  <li className='mt-4 flex px-2'>
-                    <div className='flex-shrink-0'>
-                      <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
-                    </div>
-                    <div className='mx-2 flex-grow overflow-hidden '>
-                      <div className='truncate text-sm'>Ốp lưng Redmi 10111111111111111111111111111111111</div>
-                    </div>
-                    <div className='flex-shrink-0'>
-                      <div className=' text-sm text-orange'>30000đ</div>
-                    </div>
-                  </li>
                   <li className='mt-4 flex px-2'>
                     <div className='flex-shrink-0'>
                       <img src='' alt='' className='h-11 w-11 border-spacing-1 border-gray-200' />
