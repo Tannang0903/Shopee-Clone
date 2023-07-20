@@ -60,7 +60,7 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
   return (
     <div className=''>
       <Link
-        to={'/'}
+        to={path.home}
         className={classNames('flex items-center border-b-[1px] border-gray-300/80 py-[16px]', {
           'text-orange': !category
         })}

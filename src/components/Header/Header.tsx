@@ -14,6 +14,7 @@ import { omit } from 'lodash'
 import { purchasesStatus } from 'src/constants/purchase'
 import purchaseAPI from 'src/apis/purchase.api'
 import { formatCurrency } from 'src/utils/utils'
+import { queryClient } from 'src/main'
 
 const Header = () => {
   const queryConfig = useQueryConfig()
@@ -34,13 +35,15 @@ const Header = () => {
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)
+      queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
     }
   })
 
   // khi chúng ta chuyển trang thì Header chỉ bị re-render không bị unmount
   const PurchasesInCartQuery = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
-    queryFn: () => purchaseAPI.getPurchases({ status: purchasesStatus.inCart })
+    queryFn: () => purchaseAPI.getPurchases({ status: purchasesStatus.inCart }),
+    enabled: isAuthenticated
   })
   const purchasesInCart = PurchasesInCartQuery.data?.data.data
 
@@ -139,7 +142,7 @@ const Header = () => {
           </ul>
           <ul className='flex items-center'>
             <li>
-              <Link to={'/!'} className='block hover:text-gray-300'>
+              <Link to={'/notice'} className='block hover:text-gray-300'>
                 <i className='fa-regular fa-bell'></i>
                 <span className='ml-1 mr-3 capitalize'>Thông báo</span>
               </Link>
@@ -274,7 +277,7 @@ const Header = () => {
                       <div className='text-sm capitalize text-gray-500'>
                         {purchasesInCart.length > 5 ? purchasesInCart.length - 5 : ''} Thêm hàng vào giỏ
                       </div>
-                      <Link to={'/!'} className='mr-2 rounded-sm bg-[#fb5a24] px-2 py-1 text-white shadow-sm'>
+                      <Link to={path.cart} className='mr-2 rounded-sm bg-[#fb5a24] px-2 py-1 text-white shadow-sm'>
                         Xem giỏ hàng
                       </Link>
                     </div>
@@ -292,7 +295,7 @@ const Header = () => {
               </div>
             }
           >
-            <Link to={'/cart'} className=' relative block p-2 text-white'>
+            <Link to={path.cart} className=' relative block p-2 text-white'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
@@ -307,9 +310,11 @@ const Header = () => {
                   d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                 />
               </svg>
-              <span className='absolute right-[-6px] top-[-2px] rounded-[20px] border-[2px] border-orange bg-white px-[8px] py-[1px] text-[11px] font-medium text-orange'>
-                {purchasesInCart && purchasesInCart.length}
-              </span>
+              {purchasesInCart && (
+                <span className='absolute right-[-6px] top-[-2px] rounded-[20px] border-[2px] border-orange bg-white px-[8px] py-[1px] text-[11px] font-medium text-orange'>
+                  {purchasesInCart.length}
+                </span>
+              )}
             </Link>
           </Popover>
         </div>

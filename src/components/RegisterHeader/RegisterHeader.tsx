@@ -18,7 +18,7 @@ const RegisterHeader = () => {
           <span className='mb-[3px] ml-4 text-[24px]'>{isRegister ? 'Đăng Kí' : 'Đăng Nhập'}</span>
         </nav>
         <div>
-          <Link to={'/!'} className='block text-[14px] text-[#ee4d2d] '>
+          <Link to={'/help'} className='block text-[14px] text-[#ee4d2d] '>
             Bạn cần giúp đỡ ?
           </Link>
         </div>

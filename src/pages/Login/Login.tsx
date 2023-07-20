@@ -96,10 +96,10 @@ const Login = () => {
                 </Button>
               </div>
               <div className='mt-1 flex justify-between'>
-                <Link to={'/!'} className='mt-1  text-xs font-light text-blue-800'>
+                <Link to={'/forget-password'} className='mt-1  text-xs font-light text-blue-800'>
                   Quên mật khẩu
                 </Link>
-                <Link to={'/!'} className='mt-1 text-xs font-light text-blue-800'>
+                <Link to={'/login-with-sms'} className='mt-1 text-xs font-light text-blue-800'>
                   Đăng nhập với SMS
                 </Link>
               </div>
