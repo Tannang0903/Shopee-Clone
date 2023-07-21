@@ -6,10 +6,20 @@ interface Props extends InputNumberProps {
   onIncrease?: (value: number) => void
   onDecrease?: (value: number) => void
   onType?: (value: number) => void
+  onFocusOut?: (value: number) => void
   classNameWrapper?: string
 }
 
-const QuantityController = ({ max, value, onIncrease, onDecrease, onType, classNameWrapper, ...rest }: Props) => {
+const QuantityController = ({
+  max,
+  value,
+  onIncrease,
+  onDecrease,
+  onType,
+  onFocusOut,
+  classNameWrapper,
+  ...rest
+}: Props) => {
   const [localValue, setLocalValue] = useState<number>(Number(value || 0))
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +31,10 @@ const QuantityController = ({ max, value, onIncrease, onDecrease, onType, classN
     }
     onType && onType(_value)
     setLocalValue(_value)
+  }
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+    onFocusOut && onFocusOut(Number(event.target.value))
   }
 
   const handleIncrease = () => {
@@ -54,6 +68,7 @@ const QuantityController = ({ max, value, onIncrease, onDecrease, onType, classN
         className='w-full border-y border-gray-400/50'
         classNameInput='max-w-[60px] text-center text-[14px] text-black outline-none h-[26px]'
         onChange={handleChange}
+        onBlur={handleBlur}
         value={value || localValue}
         {...rest}
       />
