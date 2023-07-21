@@ -3,6 +3,7 @@ import { produce } from 'immer'
 import { keyBy } from 'lodash'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import purchaseAPI from 'src/apis/purchase.api'
 import Button from 'src/components/Button'
 import QuantityController from 'src/components/QuantityController'
@@ -28,6 +29,14 @@ const Cart = () => {
   const UpdatePurchasesMutation = useMutation({
     mutationFn: purchaseAPI.updatePurchase,
     onSuccess: () => {
+      PurchasesInCartQuery.refetch()
+    }
+  })
+
+  const BuyProductsMutation = useMutation({
+    mutationFn: purchaseAPI.buyProducts,
+    onSuccess: (data) => {
+      toast.success(data.data.message)
       PurchasesInCartQuery.refetch()
     }
   })
@@ -109,6 +118,16 @@ const Cart = () => {
   const handleDeleteListPurchases = () => {
     const purchaseIds = isPurchasesChecked.map((purchase) => purchase._id)
     DeletePurchasesMutation.mutate(purchaseIds)
+  }
+
+  const handleBuyProducts = () => {
+    if (isPurchasesChecked.length > 0) {
+      const body = isPurchasesChecked.map((purchase) => ({
+        product_id: purchase.product._id,
+        buy_count: purchase.buy_count
+      }))
+      BuyProductsMutation.mutate(body)
+    }
   }
 
   return (
@@ -197,7 +216,7 @@ const Cart = () => {
         ))}
       </div>
 
-      <div className='container sticky bottom-0 rounded-sm shadow-[rgba(17,_17,_26,_0.1)_0px_0px_4px]'>
+      <div className='container sticky bottom-0 mt-4 rounded-sm shadow-[rgba(17,_17,_26,_0.1)_0px_0px_4px]'>
         <div className='grid grid-cols-12 bg-white p-6'>
           <div className='col-span-4 flex items-center'>
             <input
@@ -224,7 +243,14 @@ const Cart = () => {
                 <span className='mx-4 text-orange'>{formatNumberToSocialStyle(totaPurchasesCheckedSavingPrice)}</span>
               </div>
             </div>
-            <Button className='rounded-sm bg-orange px-14 py-2 text-[16px] text-white shadow-sm'>Mua hàng</Button>
+            <Button
+              className='flex items-center rounded-sm bg-orange px-14 py-2 text-[16px] text-white shadow-sm'
+              onClick={handleBuyProducts}
+              disabled={BuyProductsMutation.isLoading}
+              isLoading={BuyProductsMutation.isLoading}
+            >
+              <span>Mua hàng</span>
+            </Button>
           </div>
         </div>
       </div>

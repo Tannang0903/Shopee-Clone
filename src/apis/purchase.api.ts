@@ -14,7 +14,7 @@ const purchaseAPI = {
   buyProducts: (body: { product_id: string; buy_count: number }[]) =>
     http.post<SuccessResponse<Purchase[]>>('/purchases/buy-products', body),
 
-  updatePurchase: (body: { purchase_id: string; buy_count: number }) =>
+  updatePurchase: (body: { product_id: string; buy_count: number }) =>
     http.put<SuccessResponse<Purchase>>('/purchases/update-purchase', body),
 
   deletePurchase: (purchasesId: string[]) =>
