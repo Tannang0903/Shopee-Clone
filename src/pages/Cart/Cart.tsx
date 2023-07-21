@@ -58,19 +58,13 @@ const Cart = () => {
             <div className='col-span-6'>
               <div className='grid grid-cols-5 grid-rows-3 text-center text-[15px] capitalize text-gray-600 '>
                 <div className='col-span-2 row-start-2 text-[14px]'>
-                  <span className='text-gray-400 line-through'>
+                  <span className='mr-2 text-gray-400 line-through'>
                     {formatCurrency(purchase.product.price_before_discount)}
                   </span>
                   <span className='text-black'>{formatCurrency(purchase.product.price)}</span>
                 </div>
                 <div className='col-span-1 row-start-2'>
-                  <QuantityController
-                    // onDecrease={handleBuyCount}
-                    // onIncrease={handleBuyCount}
-                    // onType={handleBuyCount}
-                    value={purchase.buy_count}
-                    max={purchase.product.quantity}
-                  />
+                  <QuantityController value={purchase.buy_count} max={purchase.product.quantity} />
                 </div>
                 <div className='col-span-1 row-start-2'>
                   <span className='text-[14px] text-orange'>

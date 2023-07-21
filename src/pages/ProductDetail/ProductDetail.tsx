@@ -15,7 +15,12 @@ import { toast } from 'react-toastify'
 const ProductDetail = () => {
   const { id } = useParams()
 
+  const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
+  const [activeImage, setActiveImage] = useState('')
+
   const [buyCount, setBuyCount] = useState<number>(1)
+
+  const imageRef = useRef(null)
 
   const ProductQuery = useQuery({
     queryKey: ['product', id],
@@ -24,6 +29,7 @@ const ProductDetail = () => {
   const product = ProductQuery.data?.data.data
 
   const queryConfig: ProductListConfig = { limit: '10', page: '1', category: product?.category._id }
+
   const ProductListQuery = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => productAPI.getProducts(queryConfig as ProductListConfig),
@@ -35,11 +41,6 @@ const ProductDetail = () => {
   const addToCartMutation = useMutation(purchaseAPI.addToCart)
 
   const queryClient = useQueryClient()
-
-  const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
-  const [activeImage, setActiveImage] = useState('')
-
-  const imageRef = useRef(null)
 
   const currentImages = useMemo(
     () => (product ? product.images.slice(...currentIndexImages) : []),
@@ -84,11 +85,11 @@ const ProductDetail = () => {
     image.style.left = left + 'px'
   }
 
+  const handleRemoveZoomImage = () => (imageRef.current as unknown as HTMLImageElement)?.removeAttribute('style')
+
   const handleBuyCount = (value: number) => {
     setBuyCount(value)
   }
-
-  const handleRemoveZoomImage = () => (imageRef.current as unknown as HTMLImageElement)?.removeAttribute('style')
 
   const handleAddToCart = () => {
     addToCartMutation.mutate(

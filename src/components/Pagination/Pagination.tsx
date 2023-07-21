@@ -104,6 +104,7 @@ const Pagination = ({ queryConfig, pageSize }: Props) => {
       )}
 
       {renderPagination()}
+
       {page === pageSize ? (
         <span className='mx-2 flex h-8 w-8 cursor-not-allowed items-center justify-center rounded bg-gray-300 text-gray-600 shadow-sm'>
           <i className='fa-solid fa-angle-right'></i>

@@ -39,7 +39,7 @@ const Header = () => {
     }
   })
 
-  // khi chúng ta chuyển trang thì Header chỉ bị re-render không bị unmount
+  // khi chuyển trang thì Header chỉ bị re-render không bị unmount
   const PurchasesInCartQuery = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
     queryFn: () => purchaseAPI.getPurchases({ status: purchasesStatus.inCart }),
@@ -61,10 +61,10 @@ const Header = () => {
           },
           ['order', 'sort_by']
         )
-      : omit({
+      : {
           ...queryConfig,
           name: data.name
-        })
+        }
     navigate({
       pathname: path.home,
       search: createSearchParams(config).toString()
@@ -250,7 +250,7 @@ const Header = () => {
             className='col-span-2 m-auto'
             renderPopover={
               <div className='relative w-[400px] rounded border border-gray-200 bg-white shadow'>
-                {purchasesInCart ? (
+                {purchasesInCart && purchasesInCart.length > 0 ? (
                   <div>
                     <h4 className='p-2 text-left text-sm font-light text-[#a1a1a1]'>Sản phẩm mới thêm</h4>
                     <ul>
@@ -286,7 +286,7 @@ const Header = () => {
                   <div className='z-20 p-8 text-center'>
                     <img
                       src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/9bdd8040b334d31946f49e36beaf32db.png'
-                      alt=''
+                      alt='Cart Empty'
                       className='mx-auto w-1/2 p-2'
                     />
                     <span className='text-[16px] text-gray-500'>Chưa có sản phẩm</span>
@@ -310,7 +310,7 @@ const Header = () => {
                   d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                 />
               </svg>
-              {purchasesInCart && (
+              {purchasesInCart && purchasesInCart.length > 0 && (
                 <span className='absolute right-[-6px] top-[-2px] rounded-[20px] border-[2px] border-orange bg-white px-[8px] py-[1px] text-[11px] font-medium text-orange'>
                   {purchasesInCart.length}
                 </span>

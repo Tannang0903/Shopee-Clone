@@ -18,7 +18,7 @@ const ProtectedRoute = () => {
 
 const RejectedRoute = () => {
   const { isAuthenticated } = useContext(AppContext)
-  return isAuthenticated ? <Navigate to={path.home} /> : <Outlet />
+  return !isAuthenticated ? <Outlet /> : <Navigate to={path.home} />
 }
 
 const useRouteElements = () => {

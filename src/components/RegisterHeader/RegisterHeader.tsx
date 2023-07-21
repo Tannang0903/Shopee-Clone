@@ -4,6 +4,7 @@ import path from 'src/constants/path'
 const RegisterHeader = () => {
   const registerMatch = useMatch(path.register)
   const isRegister = Boolean(registerMatch)
+
   return (
     <header className='h-[84px]'>
       <div className='container flex h-[84px] items-center justify-between'>

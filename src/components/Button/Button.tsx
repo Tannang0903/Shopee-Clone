@@ -4,9 +4,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
 }
 
-const Button = (props: ButtonProps) => {
-  const { className, isLoading, disabled, children, ...rest } = props
+const Button = ({ className, isLoading, disabled, children, ...rest }: ButtonProps) => {
   const newClassName = disabled ? className + 'cursor-not-allowed' : className
+
   return (
     <button className={newClassName} disabled={disabled} {...rest}>
       {isLoading && (

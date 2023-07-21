@@ -1,6 +1,5 @@
 import Button from 'src/components/Button'
-import { order as orderConstant } from 'src/constants/product.param'
-import { sortBy } from 'src/constants/product.param'
+import { sortBy, order as orderConstant } from 'src/constants/product.param'
 import { ProductListConfig } from 'src/types/product.type'
 import classNames from 'classnames'
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'

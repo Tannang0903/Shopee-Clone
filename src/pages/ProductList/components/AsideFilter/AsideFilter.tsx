@@ -10,6 +10,7 @@ import { InputNumberSchema } from 'src/utils/rules'
 import RatingStar from '../RatingStar'
 import { omit } from 'lodash'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+
 interface Props {
   queryConfig: QueryConfig
   categories: Category[]

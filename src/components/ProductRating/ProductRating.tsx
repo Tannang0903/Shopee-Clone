@@ -16,6 +16,7 @@ const ProductRating = ({ rating, size, color }: Props) => {
     }
     return '0%'
   }
+
   return (
     <div className='flex items-center'>
       {Array(5)

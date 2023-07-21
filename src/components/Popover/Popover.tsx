@@ -27,6 +27,7 @@ const Popover = ({ children, renderPopover, className, as: Element = 'div', plac
   const hidePopover = () => {
     setIsOpen(false)
   }
+
   return (
     <Element className={className} ref={reference} onMouseEnter={showPopover} onMouseLeave={hidePopover}>
       {children}
