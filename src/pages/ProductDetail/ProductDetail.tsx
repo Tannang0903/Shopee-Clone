@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import productAPI from 'src/apis/product.api'
 import ProductRating from 'src/components/ProductRating'
 import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
@@ -11,6 +11,7 @@ import QuantityController from 'src/components/QuantityController'
 import purchaseAPI from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constants/purchase'
 import { toast } from 'react-toastify'
+import path from 'src/constants/path'
 
 const ProductDetail = () => {
   const { id } = useParams()
@@ -21,6 +22,8 @@ const ProductDetail = () => {
   const [buyCount, setBuyCount] = useState<number>(1)
 
   const imageRef = useRef(null)
+
+  const navigate = useNavigate()
 
   const ProductQuery = useQuery({
     queryKey: ['product', id],
@@ -103,6 +106,16 @@ const ProductDetail = () => {
         }
       }
     )
+  }
+
+  const handleBuyNow = async () => {
+    const response = await addToCartMutation.mutateAsync({ product_id: product?._id as string, buy_count: buyCount })
+    const purchase = response.data.data
+    navigate(path.cart, {
+      state: {
+        purchaseId: purchase._id
+      }
+    })
   }
 
   if (!product) return null
@@ -214,7 +227,9 @@ const ProductDetail = () => {
                 <i className='fa-solid fa-cart-plus'></i>
                 <span className='ml-2'>Thêm vào giỏ hàng</span>
               </button>
-              <button className='h-[48px] rounded-sm bg-orange px-4 text-white shadow-sm'>Mua ngay</button>
+              <button onClick={handleBuyNow} className='h-[48px] rounded-sm bg-orange px-4 text-white shadow-sm'>
+                Mua ngay
+              </button>
             </div>
           </div>
         </div>
