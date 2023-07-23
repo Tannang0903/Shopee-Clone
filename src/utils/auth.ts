@@ -17,7 +17,11 @@ export const getProfileFromLS = () => {
   return token ? JSON.parse(token) : null
 }
 
+export const LocalStorageEventTarget = new EventTarget()
+
 export const clearTokenFromLS = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('profile')
+  const clearTokenEvent = new Event('clearToken')
+  LocalStorageEventTarget.dispatchEvent(clearTokenEvent)
 }

@@ -25,6 +25,8 @@ const ProductDetail = () => {
 
   const navigate = useNavigate()
 
+  const queryClient = useQueryClient()
+
   const ProductQuery = useQuery({
     queryKey: ['product', id],
     queryFn: () => productAPI.getProductsDetail(id as string)
@@ -32,7 +34,6 @@ const ProductDetail = () => {
   const product = ProductQuery.data?.data.data
 
   const queryConfig: ProductListConfig = { limit: '10', page: '1', category: product?.category._id }
-
   const ProductListQuery = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => productAPI.getProducts(queryConfig as ProductListConfig),
@@ -41,9 +42,9 @@ const ProductDetail = () => {
   })
   const productsData = ProductListQuery.data
 
-  const addToCartMutation = useMutation(purchaseAPI.addToCart)
-
-  const queryClient = useQueryClient()
+  const addToCartMutation = useMutation({
+    mutationFn: (body: { product_id: string; buy_count: number }) => purchaseAPI.addToCart(body)
+  })
 
   const currentImages = useMemo(
     () => (product ? product.images.slice(...currentIndexImages) : []),
