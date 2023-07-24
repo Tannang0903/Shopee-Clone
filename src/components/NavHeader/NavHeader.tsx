@@ -7,6 +7,7 @@ import authAPI from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
 import { getAccessTokenFromLS } from 'src/utils/auth'
 import path from 'src/constants/path'
+import { getAvatarURL } from 'src/utils/utils'
 
 const NavHeader = () => {
   const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
@@ -154,14 +155,7 @@ const NavHeader = () => {
               </div>
             }
           >
-            <img
-              src={
-                profile?.avatar ||
-                'https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI4MDQwOTc0L29yaWdpbmFsX2ZmNGYxZjQzZDdiNzJjYzMxZDJlYjViMDgyN2ZmMWFjLnBuZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjoxMjAwLCJmaXQiOiJpbnNpZGUiLCJ3aXRob3V0RW5sYXJnZW1lbnQiOnRydWV9LCJ3ZWJwIjp7InF1YWxpdHkiOjkwfSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInJvdGF0ZSI6bnVsbH19?bc=0'
-              }
-              alt='avatar'
-              className='inline-block h-5 w-5 rounded-[50%]'
-            />
+            <img src={getAvatarURL(profile?.avatar)} alt='avatar' className='inline-block h-5 w-5 rounded-[50%]' />
             <span className='ml-1 font-medium hover:text-gray-300'>{profile?.email}</span>
           </Popover>
         )}

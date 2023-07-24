@@ -3,10 +3,11 @@ import { InputHTMLAttributes, forwardRef, useState } from 'react'
 export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   classNameInput?: string
+  classErrorMessage?: string
 }
 
 const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function InputNumberInner(
-  { errorMessage, className, classNameInput, onChange, value = '', ...rest },
+  { errorMessage, className, classNameInput, onChange, value = '', classErrorMessage, ...rest },
   ref
 ) {
   const [localValue, setLocalValue] = useState<string>(value as string)
@@ -22,7 +23,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
   return (
     <div className={className}>
       <input className={classNameInput} onChange={handleChange} value={value || localValue} {...rest} ref={ref} />
-      <div className='mt-1 block min-h-[16px] text-xs font-light text-red-700'>{errorMessage}</div>
+      <div className={classErrorMessage}>{errorMessage}</div>
     </div>
   )
 })
