@@ -71,3 +71,16 @@ export const InputSearchSchema = yup.object({
 })
 
 export type InputSearchType = yup.InferType<typeof InputSearchSchema>
+
+export const UserSchema = yup.object({
+  name: yup.string().max(160, 'Độ dài không quá 160 kí tự'),
+  phone: yup.string().max(20, 'Độ dài không quá 20 kí tự'),
+  address: yup.string().max(160, 'Độ dài không quá 160 kí tự'),
+  avatar: yup.string().max(1000, 'Độ dài không quá 1000 kí tự'),
+  date_of_birth: yup.date().max(new Date(), 'Vui lòng nhập ngày trong quá khứ'),
+  password: RegisterSchema.fields['password'],
+  new_password: RegisterSchema.fields['password'],
+  confirm_password: RegisterSchema.fields['confirm_password']
+})
+
+export type UserSchemaType = yup.InferType<typeof UserSchema>

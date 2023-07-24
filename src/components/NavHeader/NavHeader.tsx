@@ -141,7 +141,7 @@ const NavHeader = () => {
                   >
                     Tài khoản của tôi
                   </Link>
-                  <Link to={'/!'} className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'>
+                  <Link to={'/purchase'} className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'>
                     Đơn mua
                   </Link>
                   <button
@@ -155,8 +155,11 @@ const NavHeader = () => {
             }
           >
             <img
-              src='https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI4MDQwOTc0L29yaWdpbmFsX2ZmNGYxZjQzZDdiNzJjYzMxZDJlYjViMDgyN2ZmMWFjLnBuZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjoxMjAwLCJmaXQiOiJpbnNpZGUiLCJ3aXRob3V0RW5sYXJnZW1lbnQiOnRydWV9LCJ3ZWJwIjp7InF1YWxpdHkiOjkwfSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInJvdGF0ZSI6bnVsbH19?bc=0'
-              alt=''
+              src={
+                profile?.avatar ||
+                'https://images.are.na/eyJidWNrZXQiOiJhcmVuYV9pbWFnZXMiLCJrZXkiOiI4MDQwOTc0L29yaWdpbmFsX2ZmNGYxZjQzZDdiNzJjYzMxZDJlYjViMDgyN2ZmMWFjLnBuZyIsImVkaXRzIjp7InJlc2l6ZSI6eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjoxMjAwLCJmaXQiOiJpbnNpZGUiLCJ3aXRob3V0RW5sYXJnZW1lbnQiOnRydWV9LCJ3ZWJwIjp7InF1YWxpdHkiOjkwfSwianBlZyI6eyJxdWFsaXR5Ijo5MH0sInJvdGF0ZSI6bnVsbH19?bc=0'
+              }
+              alt='avatar'
               className='inline-block h-5 w-5 rounded-[50%]'
             />
             <span className='ml-1 font-medium hover:text-gray-300'>{profile?.email}</span>

@@ -11,6 +11,7 @@ import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path'
+import Input from 'src/components/Input'
 
 const Register = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -66,39 +67,33 @@ const Register = () => {
           <div className='rounded-sm bg-white p-[30px] lg:col-span-2 lg:col-start-4 '>
             <form onSubmit={onSubmit} noValidate>
               <h1 className='text-xl'>Đăng kí</h1>
-              <div className='mt-8'>
-                <input
-                  type='email'
-                  className='w-full rounded-sm border border-gray-300 px-3 py-2 font-light outline-none focus:border-gray-500 focus:shadow'
-                  placeholder='Email'
-                  {...register('email')}
-                />
-                <span className='mt-1 block min-h-[16px] text-xs font-light text-red-700'>{errors.email?.message}</span>
-              </div>
-              <div className='mt-3'>
-                <input
-                  type='password'
-                  className='w-full rounded-sm border border-gray-300 px-3 py-2 font-light outline-none focus:border-gray-500 focus:shadow'
-                  placeholder='Mật khẩu'
-                  autoComplete='on'
-                  {...register('password')}
-                />
-                <span className='mt-1 block min-h-[16px] text-xs font-light text-red-700'>
-                  {errors.password?.message}
-                </span>
-              </div>
-              <div className='mt-3'>
-                <input
-                  type='password'
-                  className='w-full rounded-sm border border-gray-300 px-3 py-2 font-light outline-none focus:border-gray-500 focus:shadow'
-                  placeholder='Xác nhận mật khẩu'
-                  autoComplete='on'
-                  {...register('confirm_password')}
-                />
-                <span className='mt-1 block min-h-[16px] text-xs font-light text-red-700'>
-                  {errors.confirm_password?.message}
-                </span>
-              </div>
+              <Input
+                type='email'
+                name='email'
+                register={register}
+                placeholder='Email'
+                className='mt-8'
+                errorMessage={errors.email?.message}
+                autoComplete='on'
+              />
+              <Input
+                type='password'
+                name='password'
+                register={register}
+                placeholder='Mật khẩu'
+                className='mt-3'
+                errorMessage={errors.password?.message}
+                autoComplete='on'
+              />
+              <Input
+                type='password'
+                name='confirm_password'
+                register={register}
+                placeholder='Xác nhận mật khẩu'
+                className='mt-3'
+                errorMessage={errors.confirm_password?.message}
+                autoComplete='on'
+              />
               <div className='mt-3'>
                 <Button
                   type='submit'
@@ -106,7 +101,7 @@ const Register = () => {
                   isLoading={registerAccountMutation.isLoading}
                   disabled={registerAccountMutation.isLoading}
                 >
-                  Đăng Nhập
+                  Đăng Kí
                 </Button>
               </div>
               <footer className='mt-6 text-center'>
