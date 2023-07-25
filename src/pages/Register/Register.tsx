@@ -81,7 +81,7 @@ const Register = () => {
                 name='password'
                 register={register}
                 placeholder='Mật khẩu'
-                className='mt-3'
+                className='relative mt-3'
                 errorMessage={errors.password?.message}
                 autoComplete='on'
               />
@@ -90,7 +90,7 @@ const Register = () => {
                 name='confirm_password'
                 register={register}
                 placeholder='Xác nhận mật khẩu'
-                className='mt-3'
+                className='relative mt-3'
                 errorMessage={errors.confirm_password?.message}
                 autoComplete='on'
               />

@@ -1,6 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as yup from 'yup'
 
+const handleConfirmPassword = (refString: string) => {
+  return yup
+    .string()
+    .required('Vui lòng nhập lại Password')
+    .min(8, 'Mật khẩu nhập lại ít nhất 8 ký tự')
+    .max(60, 'Mật khẩu nhập lại không quá 60 ký tự')
+    .oneOf([yup.ref(refString)], 'Nhập lại mật khẩu không khớp')
+}
+
 export const RegisterSchema = yup.object({
   email: yup
     .string()
@@ -13,12 +22,7 @@ export const RegisterSchema = yup.object({
     .required('Vui lòng nhập Password')
     .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
     .max(60, 'Mật khẩu không quá 60 ký tự'),
-  confirm_password: yup
-    .string()
-    .required('Vui lòng nhập lại Password')
-    .min(8, 'Mật khẩu nhập lại ít nhất 8 ký tự')
-    .max(60, 'Mật khẩu nhập lại không quá 60 ký tự')
-    .oneOf([yup.ref('password')], 'Nhập lại mật khẩu không khớp')
+  confirm_password: handleConfirmPassword('password')
 })
 
 export type RegisterSchemaType = yup.InferType<typeof RegisterSchema>
@@ -78,9 +82,14 @@ export const UserSchema = yup.object({
   address: yup.string().max(160, 'Độ dài không quá 160 kí tự'),
   avatar: yup.string().max(1000, 'Độ dài không quá 1000 kí tự'),
   date_of_birth: yup.date().max(new Date(), 'Vui lòng nhập ngày trong quá khứ'),
-  password: RegisterSchema.fields['password'],
-  new_password: RegisterSchema.fields['password'],
-  confirm_password: RegisterSchema.fields['confirm_password']
+  password: RegisterSchema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  new_password: RegisterSchema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  confirm_password: handleConfirmPassword('new_password') as yup.StringSchema<
+    string | undefined,
+    yup.AnyObject,
+    undefined,
+    ''
+  >
 })
 
 export type UserSchemaType = yup.InferType<typeof UserSchema>
