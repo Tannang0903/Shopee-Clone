@@ -3,7 +3,7 @@ import useQueryConfig from './useQueryConfig'
 import { InputSearchSchema, InputSearchType } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { createSearchParams, useNavigate } from 'react-router-dom'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import path from 'src/constants/path'
 
 const useSearchProducts = () => {

@@ -8,7 +8,8 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { InputNumberSchema } from 'src/utils/rules'
 import RatingStar from '../RatingStar'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
+
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 
 interface Props {
