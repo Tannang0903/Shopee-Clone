@@ -8,9 +8,14 @@ import { AppContext } from 'src/contexts/app.context'
 import { getAccessTokenFromLS } from 'src/utils/auth'
 import path from 'src/constants/path'
 import { getAvatarURL } from 'src/utils/utils'
+import { useTranslation } from 'react-i18next'
+import { locales } from 'src/i18n/i18n'
 
 const NavHeader = () => {
   const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
+
+  const { i18n } = useTranslation()
+  const currentLanguage = locales[i18n.language as keyof typeof locales]
 
   const queryClient = useQueryClient()
 
@@ -26,6 +31,10 @@ const NavHeader = () => {
   const handleLogout = () => {
     const token = getAccessTokenFromLS().split(' ')[1]
     logoutMutation.mutate(token)
+  }
+
+  const handleChangeLanguage = (language: 'en' | 'vi') => {
+    i18n.changeLanguage(language)
   }
 
   return (
@@ -119,14 +128,18 @@ const NavHeader = () => {
           renderPopover={
             <div className='relative overflow-hidden rounded-sm bg-white shadow-md'>
               <div className='flex w-[160px] flex-col'>
-                <button className='px-4 py-2 text-left hover:text-orange'>Tiếng Việt</button>
-                <button className='px-4 py-2 text-left hover:text-orange'>English</button>
+                <button className='px-4 py-2 text-left hover:text-orange' onClick={() => handleChangeLanguage('vi')}>
+                  Tiếng Việt
+                </button>
+                <button className='px-4 py-2 text-left hover:text-orange' onClick={() => handleChangeLanguage('en')}>
+                  English
+                </button>
               </div>
             </div>
           }
         >
           <i className='fa-solid fa-globe'></i>
-          <span className='ml-1 mr-1 capitalize'>Tiếng Việt</span>
+          <span className='ml-1 mr-1 capitalize'>{currentLanguage}</span>
           <i className='fa-solid fa-angle-down'></i>
         </Popover>
         {isAuthenticated && (

@@ -12,6 +12,7 @@ import purchaseAPI from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constants/purchase'
 import { toast } from 'react-toastify'
 import path from 'src/constants/path'
+import { useTranslation } from 'react-i18next'
 
 const ProductDetail = () => {
   const { id } = useParams()
@@ -24,6 +25,8 @@ const ProductDetail = () => {
   const imageRef = useRef(null)
 
   const navigate = useNavigate()
+
+  const { t } = useTranslation('product')
 
   const queryClient = useQueryClient()
 
@@ -216,7 +219,7 @@ const ProductDetail = () => {
                 />
                 <div className='ml-5 text-[14px] text-gray-500'>
                   <span className='mr-1'>{product.quantity}</span>
-                  <span>sản phẩm có sẵn</span>
+                  <span>{t('available')}</span>
                 </div>
               </div>
             </div>

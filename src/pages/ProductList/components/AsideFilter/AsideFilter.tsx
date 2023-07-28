@@ -9,8 +9,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { InputNumberSchema } from 'src/utils/rules'
 import RatingStar from '../RatingStar'
 import omit from 'lodash/omit'
-
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   queryConfig: QueryConfig
@@ -24,6 +24,8 @@ type FormData = {
 
 const AsideFilter = ({ queryConfig, categories }: Props) => {
   const { category } = queryConfig
+
+  const { t } = useTranslation('home')
 
   const {
     control,
@@ -68,7 +70,7 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
         })}
       >
         <i className='fa-solid fa-bars'></i>
-        <h3 className='ml-2 font-bold capitalize'>Tất cả danh mục</h3>
+        <h3 className='ml-2 font-bold capitalize'>{t('aside filter.all categories')}</h3>
       </Link>
       <div className='py-[20px]'>
         <ul className='pl-4 text-[14px]'>
@@ -102,7 +104,7 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
       </div>
       <div className='flex items-center border-b-[1px] border-gray-300/80 py-[16px]'>
         <i className='fa-solid fa-filter'></i>
-        <h3 className='ml-2 font-bold capitalize'>Bộ lọc tìm kiếm</h3>
+        <h3 className='ml-2 font-bold capitalize'>{t('aside filter.filter search')}</h3>
       </div>
       <div className='border-b-[1px] border-gray-300/80 py-[20px]'>
         <h4 className='pb-[12px] text-[16px] text-gray-700'>Khoảng giá</h4>
