@@ -9,6 +9,8 @@ import { UserSchema, UserSchemaType } from 'src/utils/rules'
 import { toast } from 'react-toastify'
 import { isAxiosUnprocessableEntity } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
+import { Fragment } from 'react'
+import { Helmet } from 'react-helmet-async'
 
 type FormData = Pick<UserSchemaType, 'password' | 'new_password' | 'confirm_password'>
 
@@ -57,69 +59,75 @@ const ChangePassword = () => {
   })
 
   return (
-    <div className='rounded-sm bg-white px-8 py-4 shadow'>
-      <div className='border-b-[1px] border-gray-300/40 pb-2'>
-        <h1 className='text-[20px] font-normal'>Đổi mật khẩu</h1>
-        <h2 className='text-[15px] text-gray-600'>Quản lý mật khẩu để bảo mật tài kho</h2>
+    <Fragment>
+      <Helmet>
+        <title>Đổi mật khẩu</title>
+        <meta name='description' content='Đây là trang đổi mật khẩu của dự án Shopee Clone' />
+      </Helmet>
+      <div className='rounded-sm bg-white px-8 py-4 shadow'>
+        <div className='border-b-[1px] border-gray-300/40 pb-2'>
+          <h1 className='text-[20px] font-normal'>Đổi mật khẩu</h1>
+          <h2 className='text-[15px] text-gray-600'>Quản lý mật khẩu để bảo mật tài kho</h2>
+        </div>
+        <div className='py-6'>
+          <form onSubmit={handleSubmitForm}>
+            <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
+              <div className='col-span-3 mb-2 text-right text-gray-600'>Mật khẩu</div>
+              <div className='col-span-5'>
+                <Input
+                  type='password'
+                  name='password'
+                  register={register}
+                  errorMessage={errors.password?.message}
+                  placeholder='Mật khẩu'
+                  classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
+                  className='relative'
+                  autoComplete='on'
+                />
+              </div>
+            </div>
+            <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
+              <div className='col-span-3 mb-2 text-right text-gray-600'>Mật khẩu mới</div>
+              <div className='col-span-5'>
+                <Input
+                  type='password'
+                  name='new_password'
+                  register={register}
+                  errorMessage={errors.new_password?.message}
+                  placeholder='Mật khẩu mới'
+                  classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
+                  className='relative'
+                  autoComplete='on'
+                />
+              </div>
+            </div>
+            <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
+              <div className='col-span-3 mb-2 text-right text-gray-600'>Nhập lại mật khẩu</div>
+              <div className='col-span-5'>
+                <Input
+                  type='password'
+                  name='confirm_password'
+                  register={register}
+                  errorMessage={errors.confirm_password?.message}
+                  placeholder='Nhập lại mật khẩu'
+                  classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
+                  className='relative'
+                  autoComplete='on'
+                />
+              </div>
+            </div>
+            <div className='mt-6 grid grid-cols-10 items-center gap-4 text-[15px]'>
+              <Button
+                type='submit'
+                className='col-span-1 col-start-4 rounded-sm bg-orange px-4 py-2 text-[15px] text-white shadow-sm'
+              >
+                Lưu
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div className='py-6'>
-        <form onSubmit={handleSubmitForm}>
-          <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-            <div className='col-span-3 mb-2 text-right text-gray-600'>Mật khẩu</div>
-            <div className='col-span-5'>
-              <Input
-                type='password'
-                name='password'
-                register={register}
-                errorMessage={errors.password?.message}
-                placeholder='Mật khẩu'
-                classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
-                className='relative'
-                autoComplete='on'
-              />
-            </div>
-          </div>
-          <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-            <div className='col-span-3 mb-2 text-right text-gray-600'>Mật khẩu mới</div>
-            <div className='col-span-5'>
-              <Input
-                type='password'
-                name='new_password'
-                register={register}
-                errorMessage={errors.new_password?.message}
-                placeholder='Mật khẩu mới'
-                classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
-                className='relative'
-                autoComplete='on'
-              />
-            </div>
-          </div>
-          <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-            <div className='col-span-3 mb-2 text-right text-gray-600'>Nhập lại mật khẩu</div>
-            <div className='col-span-5'>
-              <Input
-                type='password'
-                name='confirm_password'
-                register={register}
-                errorMessage={errors.confirm_password?.message}
-                placeholder='Nhập lại mật khẩu'
-                classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
-                className='relative'
-                autoComplete='on'
-              />
-            </div>
-          </div>
-          <div className='mt-6 grid grid-cols-10 items-center gap-4 text-[15px]'>
-            <Button
-              type='submit'
-              className='col-span-1 col-start-4 rounded-sm bg-orange px-4 py-2 text-[15px] text-white shadow-sm'
-            >
-              Lưu
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+    </Fragment>
   )
 }
 

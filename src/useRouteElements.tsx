@@ -14,7 +14,7 @@ const ProductList = lazy(() => import('./pages/ProductList'))
 const Cart = lazy(() => import('./pages/Cart'))
 const Profile = lazy(() => import('./pages//User/pages/Profile'))
 const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'))
-const HistoryPurchase = lazy(() => import('./pages/User/layouts/UserLayout'))
+const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const ProtectedRoute = () => {

@@ -106,10 +106,10 @@ const NavHeader = () => {
       </ul>
       <ul className='flex items-center'>
         <li>
-          <Link to={'/notice'} className='block hover:text-gray-300'>
+          <a href='/notice' className='block hover:text-gray-300'>
             <i className='fa-regular fa-bell'></i>
             <span className='ml-1 mr-3 capitalize'>Thông báo</span>
-          </Link>
+          </a>
         </li>
         <li>
           <a
@@ -155,7 +155,10 @@ const NavHeader = () => {
                   >
                     Tài khoản của tôi
                   </Link>
-                  <Link to={'/purchase'} className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'>
+                  <Link
+                    to={path.historyPurchase}
+                    className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'
+                  >
                     Đơn mua
                   </Link>
                   <button

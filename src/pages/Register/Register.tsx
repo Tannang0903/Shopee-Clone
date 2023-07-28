@@ -7,11 +7,12 @@ import authAPI from 'src/apis/auth.api'
 import omit from 'lodash/omit'
 import { isAxiosUnprocessableEntity } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
-import { useContext } from 'react'
+import { Fragment, useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path'
 import Input from 'src/components/Input'
+import { Helmet } from 'react-helmet-async'
 
 const Register = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -61,60 +62,66 @@ const Register = () => {
   })
 
   return (
-    <div className='h-[600px] bg-[url("https://down-vn.img.susercontent.com/file/sg-11134004-7qvfc-lisjisjilfqv70")] bg-cover bg-center bg-no-repeat'>
-      <div className='container px-[60px]'>
-        <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-[60px]'>
-          <div className='rounded-sm bg-white p-[30px] lg:col-span-2 lg:col-start-4 '>
-            <form onSubmit={onSubmit} noValidate>
-              <h1 className='text-xl'>Đăng kí</h1>
-              <Input
-                type='email'
-                name='email'
-                register={register}
-                placeholder='Email'
-                className='mt-8'
-                errorMessage={errors.email?.message}
-                autoComplete='on'
-              />
-              <Input
-                type='password'
-                name='password'
-                register={register}
-                placeholder='Mật khẩu'
-                className='relative mt-3'
-                errorMessage={errors.password?.message}
-                autoComplete='on'
-              />
-              <Input
-                type='password'
-                name='confirm_password'
-                register={register}
-                placeholder='Xác nhận mật khẩu'
-                className='relative mt-3'
-                errorMessage={errors.confirm_password?.message}
-                autoComplete='on'
-              />
-              <div className='mt-3'>
-                <Button
-                  type='submit'
-                  className='flex w-full items-center justify-center rounded-sm bg-orange py-[10px] text-sm uppercase text-white'
-                  isLoading={registerAccountMutation.isLoading}
-                  disabled={registerAccountMutation.isLoading}
-                >
-                  Đăng Kí
-                </Button>
-              </div>
-              <footer className='mt-6 text-center'>
-                <span className='mr-1 text-sm font-light text-[#b5b5b5]'>Bạn đã có tài khoản?</span>
-                <Link to={path.login} className='text-sm font-normal text-[#ee4d2d]'>
-                  Đăng nhập
-                </Link>
-              </footer>
-            </form>
+    <Fragment>
+      <Helmet>
+        <title>Đăng kí</title>
+        <meta name='description' content='Đây là trang đăng kí của dự án Shopee Clone' />
+      </Helmet>
+      <div className='h-[600px] bg-[url("https://down-vn.img.susercontent.com/file/sg-11134004-7qvfc-lisjisjilfqv70")] bg-cover bg-center bg-no-repeat'>
+        <div className='container px-[60px]'>
+          <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-[60px]'>
+            <div className='rounded-sm bg-white p-[30px] lg:col-span-2 lg:col-start-4 '>
+              <form onSubmit={onSubmit} noValidate>
+                <h1 className='text-xl'>Đăng kí</h1>
+                <Input
+                  type='email'
+                  name='email'
+                  register={register}
+                  placeholder='Email'
+                  className='mt-8'
+                  errorMessage={errors.email?.message}
+                  autoComplete='on'
+                />
+                <Input
+                  type='password'
+                  name='password'
+                  register={register}
+                  placeholder='Mật khẩu'
+                  className='relative mt-3'
+                  errorMessage={errors.password?.message}
+                  autoComplete='on'
+                />
+                <Input
+                  type='password'
+                  name='confirm_password'
+                  register={register}
+                  placeholder='Xác nhận mật khẩu'
+                  className='relative mt-3'
+                  errorMessage={errors.confirm_password?.message}
+                  autoComplete='on'
+                />
+                <div className='mt-3'>
+                  <Button
+                    type='submit'
+                    className='flex w-full items-center justify-center rounded-sm bg-orange py-[10px] text-sm uppercase text-white'
+                    isLoading={registerAccountMutation.isLoading}
+                    disabled={registerAccountMutation.isLoading}
+                  >
+                    Đăng Kí
+                  </Button>
+                </div>
+                <footer className='mt-6 text-center'>
+                  <span className='mr-1 text-sm font-light text-[#b5b5b5]'>Bạn đã có tài khoản?</span>
+                  <Link to={path.login} className='text-sm font-normal text-[#ee4d2d]'>
+                    Đăng nhập
+                  </Link>
+                </footer>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   )
 }
 
