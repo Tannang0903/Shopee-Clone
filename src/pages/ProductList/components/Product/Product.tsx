@@ -3,12 +3,15 @@ import ProductRating from 'src/components/ProductRating'
 import path from 'src/constants/path'
 import { Product as ProductType } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   product: ProductType
 }
 
 const Product = ({ product }: Props) => {
+  const { t } = useTranslation('home')
+
   return (
     <Link
       to={`${path.home}${product._id}`}
@@ -29,8 +32,8 @@ const Product = ({ product }: Props) => {
         </div>
         <div className='flex items-center'>
           <ProductRating rating={product.rating} size='h-3 w-3' color='fill-yellow-300 text-yellow-300' />
-          <div className='text-xs'>
-            Đã bán <span>{formatNumberToSocialStyle(product.sold)}</span>
+          <div className='ml-2 text-xs'>
+            {t('product.sold')} <span>{formatNumberToSocialStyle(product.sold)}</span>
           </div>
         </div>
       </div>

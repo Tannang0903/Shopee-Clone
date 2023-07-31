@@ -107,7 +107,7 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
         <h3 className='ml-2 font-bold capitalize'>{t('aside filter.filter search')}</h3>
       </div>
       <div className='border-b-[1px] border-gray-300/80 py-[20px]'>
-        <h4 className='pb-[12px] text-[16px] text-gray-700'>Khoảng giá</h4>
+        <h4 className='pb-[12px] text-[16px] capitalize text-gray-700'>{t('aside filter.price range')}</h4>
         <form onSubmit={onsubmit}>
           <div className='grid grid-cols-5'>
             <Controller
@@ -117,7 +117,7 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
                 return (
                   <InputNumber
                     type='text'
-                    placeholder='Từ'
+                    placeholder={t('aside filter.to')}
                     className='col-span-2'
                     classNameInput='w-full rounded-sm border border-gray-300 py-1 text-center text-[13px] font-light uppercase text-gray-500 outline-none'
                     onChange={(event) => {
@@ -140,7 +140,7 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
                 return (
                   <InputNumber
                     type='text'
-                    placeholder='Đến'
+                    placeholder={t('aside filter.from')}
                     className='col-span-2'
                     classNameInput='w-full rounded-sm border border-gray-300 py-1 text-center text-[13px] font-light uppercase text-gray-500 outline-none'
                     onChange={(event) => {
@@ -156,19 +156,19 @@ const AsideFilter = ({ queryConfig, categories }: Props) => {
           </div>
           <div className=' min-h-[28px] text-center text-[13px] text-red-600'>{errors.price_min?.message}</div>
           <Button className=' w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white shadow-sm hover:bg-orange/80'>
-            Áp dụng
+            {t('aside filter.apply')}
           </Button>
         </form>
       </div>
       <div className='border-b-[1px] border-gray-300/80 py-[20px]'>
-        <h4 className='pb-[12px] text-[16px] text-gray-700'>Đánh giá</h4>
+        <h4 className='pb-[12px] text-[16px] text-gray-700'>{t('aside filter.rating')}</h4>
         <RatingStar queryConfig={queryConfig} />
       </div>
       <Button
         onClick={handleRemoveAllFilter}
         className='mt-[20px] w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white shadow-sm hover:bg-orange/80'
       >
-        Xóa tất cả
+        {t('aside filter.remove all')}
       </Button>
     </div>
   )

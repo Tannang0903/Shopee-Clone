@@ -1,0 +1,26 @@
+{
+  "navigation": {
+    "seller center": "Kênh người bán",
+    "download": "Tải ứng dụng",
+    "follow us on": "Kết nối",
+    "notifications": "Thông báo",
+    "help": "Hỗ trợ",
+    "sign up": "Đăng kí",
+    "login": "Đăng nhập",
+    "my account": "Tài khoản của tôi",
+    "my purchase": "Đơn mua",
+    "logout": "Đăng xuất"
+  },
+  "cart": {
+    "no products yet": "Chưa có sản phẩm",
+    "recently added products": "Sản phẩm mới thêm",
+    "view my shopping cart": "Xem giỏ hàng",
+    "more products in cart": "Thêm hàng vào giỏ"
+  },
+  "search": {
+    "search products": "Tìm kiếm sản phẩm"
+  },
+  "cart header": {
+    "shopping cart": "Giỏ hàng"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "table heading": {
+    "product": "Product",
+    "unit price": "Unit price",
+    "quantity": "Quantity",
+    "total price": "Total price",
+    "actions": "Actions"
+  },
+  "footer": {
+    "select all": "Select all",
+    "total": "Total",
+    "item": "item",
+    "saved": "Saved",
+    "check out": "Check out"
+  },
+  "empty cart": {
+    "your shopping cart is empty": "Your shopping cart is empty",
+    "go shopping now": "Go shopping now"
+  }
+}

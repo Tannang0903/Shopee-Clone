@@ -2,6 +2,7 @@ import { Fragment, useRef } from 'react'
 import { toast } from 'react-toastify'
 import config from 'src/constants/config'
 import Button from '../Button'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   onChange?: (file?: File) => void
@@ -9,6 +10,8 @@ interface Props {
 
 const InputFile = ({ onChange }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const { t } = useTranslation('account')
 
   const OnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileFormLocal = event.target.files?.[0]
@@ -39,7 +42,7 @@ const InputFile = ({ onChange }: Props) => {
         onClick={handleUploadFile}
         className='my-4 rounded-sm border-[1px] border-gray-300 px-4 py-2 text-[15px] capitalize text-gray-600 shadow-sm'
       >
-        Chọn ảnh
+        {t('avatar.select image')}
       </Button>
     </Fragment>
   )

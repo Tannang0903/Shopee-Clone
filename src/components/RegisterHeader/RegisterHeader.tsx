@@ -1,9 +1,12 @@
 import { Link, useMatch } from 'react-router-dom'
 import path from 'src/constants/path'
+import { useTranslation } from 'react-i18next'
 
 const RegisterHeader = () => {
   const registerMatch = useMatch(path.register)
   const isRegister = Boolean(registerMatch)
+
+  const { t } = useTranslation('form')
 
   return (
     <header className='h-[84px]'>
@@ -16,11 +19,11 @@ const RegisterHeader = () => {
               </g>
             </svg>
           </Link>
-          <span className='mb-[3px] ml-4 text-[24px]'>{isRegister ? 'Đăng Kí' : 'Đăng Nhập'}</span>
+          <span className='mb-[3px] ml-4 text-[24px]'>{isRegister ? t('register.register') : t('log in.log in')}</span>
         </nav>
         <div>
           <Link to={'/help'} className='block text-[14px] text-[#ee4d2d] '>
-            Bạn cần giúp đỡ ?
+            {t('header.need help')}
           </Link>
         </div>
       </div>

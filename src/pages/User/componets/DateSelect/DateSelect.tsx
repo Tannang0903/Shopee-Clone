@@ -1,5 +1,6 @@
 import range from 'lodash/range'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   onChange?: (value: Date) => void
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const DateSelect = ({ value, onChange, errorMessage }: Props) => {
+  const { t } = useTranslation('account')
+
   const [date, setDate] = useState({
     date: value?.getDate() || 1,
     month: value?.getMonth() || 0,
@@ -38,7 +41,7 @@ const DateSelect = ({ value, onChange, errorMessage }: Props) => {
 
   return (
     <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-      <div className='col-span-2 mb-2 text-right text-gray-600'>Ngày sinh</div>
+      <div className='col-span-2 mb-2 text-right text-gray-600'>{t('profile.date of birth')}</div>
       <div className='col-span-8'>
         <div className='grid grid-cols-3 gap-4'>
           <select
@@ -47,7 +50,7 @@ const DateSelect = ({ value, onChange, errorMessage }: Props) => {
             value={value?.getDate() || date.date}
             className='col-span-1 cursor-pointer rounded-sm border border-black px-2 py-1 shadow-sm hover:border-orange'
           >
-            <option disabled>Ngày</option>
+            <option disabled>{t('profile.date.day')}</option>
             {range(1, 32).map((item) => (
               <option value={item} key={item}>
                 {item}
@@ -61,7 +64,7 @@ const DateSelect = ({ value, onChange, errorMessage }: Props) => {
             value={value?.getMonth() || date.month}
             className='col-span-1 cursor-pointer rounded-sm border border-black px-2 py-1 shadow-sm hover:border-orange'
           >
-            <option disabled>Tháng</option>
+            <option disabled>{t('profile.date.month')}</option>
             {range(0, 12).map((item) => (
               <option value={item} key={item}>
                 {item + 1}
@@ -75,7 +78,7 @@ const DateSelect = ({ value, onChange, errorMessage }: Props) => {
             value={value?.getFullYear() || date.year}
             className='col-span-1 cursor-pointer rounded-sm border border-black px-2 py-1 shadow-sm hover:border-orange'
           >
-            <option disabled>Năm</option>
+            <option disabled>{t('profile.date.year')}</option>
             {range(1990, new Date().getFullYear() + 1).map((item) => (
               <option value={item} key={item}>
                 {item}

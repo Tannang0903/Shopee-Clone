@@ -4,9 +4,12 @@ import { Link, NavLink } from 'react-router-dom'
 import path from 'src/constants/path'
 import { AppContext } from 'src/contexts/app.context'
 import { getAvatarURL } from 'src/utils/utils'
+import { useTranslation } from 'react-i18next'
 
 const UserSideNav = () => {
   const { profile } = useContext(AppContext)
+
+  const { t } = useTranslation('account')
 
   return (
     <div>
@@ -22,7 +25,7 @@ const UserSideNav = () => {
           <div className='truncate text-[15px] font-medium leading-4'>{profile?.email}</div>
           <Link to={path.profile} className='flex items-center text-gray-400'>
             <i className='fa-solid fa-pen mr-1 text-[12px]'></i>
-            <span className='text-[14px] capitalize'>Sửa hồ sơ</span>
+            <span className='text-[14px] capitalize'>{t('side nav.edit profile')}</span>
           </Link>
         </div>
       </div>
@@ -36,8 +39,8 @@ const UserSideNav = () => {
             })
           }
         >
-          <i className='fa-regular fa-user mr-2 text-[18px] text-blue-600'></i>
-          <span>Tài khoản của tôi</span>
+          <i className='fa-regular fa-user mr-[10px] text-[18px] text-blue-600'></i>
+          <span>{t('side nav.my account')}</span>
         </NavLink>
         <NavLink
           to={path.changePassword}
@@ -49,7 +52,7 @@ const UserSideNav = () => {
           }
         >
           <i className='fa-regular fa-pen-to-square mr-2 text-[18px] text-green-400'></i>
-          <span>Đổi mật khẩu</span>
+          <span>{t('side nav.change password')}</span>
         </NavLink>
         <NavLink
           to={path.historyPurchase}
@@ -61,7 +64,7 @@ const UserSideNav = () => {
           }
         >
           <i className='fa-solid fa-clipboard-list mr-3  text-[18px] text-orange'></i>
-          <span>Đơn mua</span>
+          <span>{t('side nav.history purchase')}</span>
         </NavLink>
       </div>
     </div>

@@ -1,0 +1,19 @@
+{
+  "log in": {
+    "log in": "Đăng nhập",
+    "forget password": "Quên mật khẩu",
+    "log in with phone number": "Đăng nhập với SMS",
+    "new to shopee": "Bạn mới biết đến Shopee ?"
+  },
+  "register": {
+    "register": "Đăng kí",
+    "do you already have an account?": "Bạn đã có tài khoản ?"
+  },
+  "form": {
+    "password": "Mật khẩu",
+    "confirm password": "Xác nhận mật khẩu"
+  },
+  "header": {
+    "need help": "Bạn cần giúp đỡ ?"
+  }
+}

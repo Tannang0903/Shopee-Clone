@@ -1,6 +1,25 @@
 {
   "aside filter": {
     "all categories": "All categories",
-    "filter search": "Filter search"
+    "filter search": "Search filter",
+    "price range": "Price range",
+    "to": "Min",
+    "from": "Max",
+    "apply": "Apply",
+    "rating": "Rating",
+    "or more": "& Up",
+    "remove all": "Clear all"
+  },
+  "sort products": {
+    "sort by": "Sort by",
+    "popular": "Popular",
+    "latest": "Latest",
+    "top sales": "Top Sales",
+    "price": "Price",
+    "low to high": "Price: Low to High",
+    "high to low": "Price: High to Low"
+  },
+  "product": {
+    "sold": "Sold"
   }
 }

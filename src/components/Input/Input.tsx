@@ -9,6 +9,7 @@ interface Props {
   classNameInput?: string
   classNameEye?: string
   name: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>
   autoComplete?: string
 }

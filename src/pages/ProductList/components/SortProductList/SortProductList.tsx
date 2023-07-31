@@ -6,6 +6,7 @@ import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import path from 'src/constants/path'
 import omit from 'lodash/omit'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   queryConfig: QueryConfig
@@ -17,6 +18,8 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
   const page = Number(queryConfig.page)
 
   const navigate = useNavigate()
+
+  const { t } = useTranslation('home')
 
   const isActiveSortBy = (sortByValue: Exclude<ProductListConfig['sort_by'], undefined>) => {
     return sort_by === sortByValue
@@ -51,7 +54,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
   return (
     <div className='flex justify-between rounded-sm bg-[#ededed] px-6 py-3'>
       <div className='my-auto flex  items-center'>
-        <h3 className=' my-auto mr-4'>Sắp xếp theo</h3>
+        <h3 className=' my-auto mr-4'>{t('sort products.sort by')}</h3>
         <Button
           className={classNames('mr-2 rounded-sm text-sm capitalize ', {
             'bg-orange px-4 py-[6px] text-white shadow-sm hover:bg-orange/80 ': isActiveSortBy(sortBy.view),
@@ -59,7 +62,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
           })}
           onClick={() => handleSort(sortBy.view)}
         >
-          Phổ biến
+          {t('sort products.popular')}
         </Button>
         <Button
           className={classNames('mr-2 rounded-sm text-sm capitalize ', {
@@ -68,7 +71,7 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
           })}
           onClick={() => handleSort(sortBy.createdAt)}
         >
-          Mới nhất
+          {t('sort products.latest')}
         </Button>
         <Button
           className={classNames('mr-2 rounded-sm text-sm capitalize ', {
@@ -77,28 +80,31 @@ const SortProductList = ({ queryConfig, pageSize }: Props) => {
           })}
           onClick={() => handleSort(sortBy.sold)}
         >
-          Bán chạy
+          {t('sort products.top sales')}
         </Button>
         <select
-          className={classNames('w-[180px] rounded-sm px-4 py-[7px] text-sm shadow-sm outline-none', {
-            'bg-orange px-4 py-[6px] text-white shadow-sm hover:bg-orange/80 ': isActiveSortBy(sortBy.price),
-            'bg-white px-4 py-[6px] text-black hover:bg-gray-200': !isActiveSortBy(sortBy.price)
-          })}
+          className={classNames(
+            'w-[180px] rounded-sm bg-white px-4 py-[7px] text-sm shadow-sm outline-none hover:bg-gray-200',
+            {
+              'text-orange': isActiveSortBy(sortBy.price),
+              'text-black': !isActiveSortBy(sortBy.price)
+            }
+          )}
           value={order || ''}
           onChange={(event) => handlePriceOrder(event.target.value as Exclude<ProductListConfig['order'], undefined>)}
         >
           <option value='' disabled className='bg-white text-black'>
-            Giá
+            {t('sort products.price')}
           </option>
           <option value={orderConstant.asc} className='bg-white text-black'>
-            Giá: Thấp đến cao
+            {t('sort products.low to high')}
           </option>
           <option value={orderConstant.desc} className='bg-white text-black'>
-            Giá: cao đến thấp
+            {t('sort products.high to low')}
           </option>
         </select>
       </div>
-      <div className='flex items-center justify-end '>
+      <div className='flex items-center justify-end'>
         <div className='mr-2 text-[13px]'>
           <span className='text-orange'>{page}</span>/{pageSize}
         </div>

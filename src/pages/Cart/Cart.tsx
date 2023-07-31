@@ -13,9 +13,12 @@ import { purchasesStatus } from 'src/constants/purchase'
 import { AppContext } from 'src/contexts/app.context'
 import { Purchase } from 'src/types/purchase.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
+import { useTranslation } from 'react-i18next'
 
 const Cart = () => {
   const { extendedPurchases, setExtendedPurchases } = useContext(AppContext)
+
+  const { t } = useTranslation('cart')
 
   const PurchasesInCartQuery = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
@@ -168,14 +171,14 @@ const Cart = () => {
                     checked={isAllChecked}
                     onChange={handleAllCheck}
                   />
-                  <div className='flex-grow text-[15px] capitalize text-gray-600'>Sản phẩm</div>
+                  <span className='flex-grow text-[15px] capitalize text-gray-600'>{t('table heading.product')}</span>
                 </div>
                 <div className='col-span-6'>
                   <div className='grid grid-cols-5 text-center text-[15px] capitalize text-gray-600'>
-                    <div className='col-span-2'>Đơn giá</div>
-                    <div className='col-span-1'>Số lượng</div>
-                    <div className='col-span-1'>Số tiền</div>
-                    <div className='col-span-1'>Thao tác</div>
+                    <span className='col-span-2'>{t('table heading.unit price')}</span>
+                    <span className='col-span-1'>{t('table heading.quantity')}</span>
+                    <span className='col-span-1'>{t('table heading.total price')}</span>
+                    <span className='col-span-1'>{t('table heading.actions')}</span>
                   </div>
                 </div>
               </div>
@@ -236,7 +239,7 @@ const Cart = () => {
                         </span>
                       </div>
                       <div className='col-span-1'>
-                        <button onClick={() => handleDeletePurchase(index)}>
+                        <button onClick={() => handleDeletePurchase(index)} className='text-red-500'>
                           <i className='fa-solid fa-trash'></i>
                         </button>
                       </div>
@@ -256,20 +259,22 @@ const Cart = () => {
                     onChange={handleAllCheck}
                   />
                   <button className='mx-6 capitalize' onClick={handleAllCheck}>
-                    Chọn tất cả ({extendedPurchases?.length})
+                    {t('footer.select all')} ({extendedPurchases?.length})
                   </button>
-                  <button onClick={handleDeleteListPurchases}>
+                  <button onClick={handleDeleteListPurchases} className='text-red-500'>
                     <i className='fa-solid fa-trash'></i>
                   </button>
                 </div>
                 <div className='col-span-8 flex items-center justify-end'>
                   <div>
                     <div className='flex items-center'>
-                      <span className='mr-1 text-[14px]'>Tổng thanh toán ({purchasesCheckedCount} Sản phẩm):</span>
+                      <span className='mr-1 text-[14px]'>
+                        {t('footer.total')} ({purchasesCheckedCount} {t('footer.item')}):
+                      </span>
                       <span className='mx-4 text-[20px] text-orange'>{formatCurrency(totalPurchasesCheckedPrice)}</span>
                     </div>
                     <div className='flex items-center justify-end text-[14px]'>
-                      <span className='mr-1'>Tiết kiệm</span>
+                      <span className='mr-1'>{t('footer.saved')}</span>
                       <span className='mx-4 text-orange'>
                         {formatNumberToSocialStyle(totalPurchasesCheckedSavingPrice)}
                       </span>
@@ -281,7 +286,7 @@ const Cart = () => {
                     disabled={BuyProductsMutation.isLoading}
                     isLoading={BuyProductsMutation.isLoading}
                   >
-                    <span>Mua hàng</span>
+                    <span>{t('footer.check out')}</span>
                   </Button>
                 </div>
               </div>
@@ -294,12 +299,12 @@ const Cart = () => {
               alt='Empty Cart'
               className='w-[120px]'
             />
-            <div className='my-4 text-[16px] text-gray-500'>Giỏ hàng của bạn còn trống</div>
+            <div className='my-4 text-[16px] text-gray-500'>{t('empty cart.your shopping cart is empty')}</div>
             <Link
               to={path.home}
               className='h-[36px] rounded-sm bg-orange px-[24px] text-[16px] uppercase leading-[36px] text-white shadow-sm hover:bg-orange/80'
             >
-              Mua ngay
+              {t('empty cart.go shopping now')}
             </Link>
           </div>
         )}

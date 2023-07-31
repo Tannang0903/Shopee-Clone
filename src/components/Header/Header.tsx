@@ -9,10 +9,13 @@ import purchaseAPI from 'src/apis/purchase.api'
 import { formatCurrency } from 'src/utils/utils'
 import NavHeader from '../NavHeader'
 import useSearchProducts from 'src/hooks/useSearchProducts'
+import { useTranslation } from 'react-i18next'
 
 const Header = () => {
   const { isAuthenticated } = useContext(AppContext)
   const { register, handleSubmitSearchProduct } = useSearchProducts()
+
+  const { t } = useTranslation('header')
 
   // khi chuyển trang thì Header chỉ bị re-render không bị unmount
   const PurchasesInCartQuery = useQuery({
@@ -23,7 +26,7 @@ const Header = () => {
   const purchasesInCart = PurchasesInCartQuery.data?.data.data
 
   return (
-    <header className='h-[120px] bg-gradient-to-b from-[#f53d2d] to-[#f63]'>
+    <header className='h-[120px] bg-gradient-to-b from-[#f53d2d] to-[#f63] shadow-sm'>
       <div className='text-[14px] font-light leading-4 text-white'>
         <NavHeader />
         <div className='container grid h-[84px] grid-cols-12 justify-between gap-4'>
@@ -44,7 +47,7 @@ const Header = () => {
               <input
                 type='text'
                 className='h-[40px] w-full rounded-sm bg-white px-4 font-light text-gray-800'
-                placeholder='Tìm kiếm sản phẩm'
+                placeholder={t('search.search products')}
                 {...register('name')}
               />
               <button className='absolute right-[3px] top-[3px] rounded-sm bg-[#fb5533] px-[22px] py-[7px] hover:bg-[#fe6141]'>
@@ -58,7 +61,9 @@ const Header = () => {
               <div className='relative w-[400px] rounded border border-gray-200 bg-white shadow'>
                 {purchasesInCart && purchasesInCart.length > 0 ? (
                   <div>
-                    <h4 className='p-2 text-left text-sm font-light text-[#a1a1a1]'>Sản phẩm mới thêm</h4>
+                    <h4 className='p-2 text-left text-sm font-light capitalize text-[#a1a1a1]'>
+                      {t('cart.recently added products')}
+                    </h4>
                     <ul>
                       {purchasesInCart &&
                         purchasesInCart.slice(0, 5).map((purchase) => (
@@ -80,11 +85,12 @@ const Header = () => {
                         ))}
                     </ul>
                     <div className='mb-2 ml-2 mt-4 flex items-center justify-between '>
-                      <div className='text-sm capitalize text-gray-500'>
-                        {purchasesInCart.length > 5 ? purchasesInCart.length - 5 : ''} Thêm hàng vào giỏ
-                      </div>
+                      <span className='text-[12px] capitalize text-gray-500'>
+                        {purchasesInCart.length > 5 &&
+                          purchasesInCart.length - 5 + ' ' + t('cart.more products in cart')}
+                      </span>
                       <Link to={path.cart} className='mr-2 rounded-sm bg-[#fb5a24] px-2 py-1 text-white shadow-sm'>
-                        Xem giỏ hàng
+                        {t('cart.view my shopping cart')}
                       </Link>
                     </div>
                   </div>
@@ -95,13 +101,13 @@ const Header = () => {
                       alt='Cart Empty'
                       className='mx-auto w-1/2 p-2'
                     />
-                    <span className='text-[16px] text-gray-500'>Chưa có sản phẩm</span>
+                    <span className='text-[16px] text-gray-500'>{t('cart.no products yet')}</span>
                   </div>
                 )}
               </div>
             }
           >
-            <Link to={path.cart} className=' relative block p-2 text-white'>
+            <Link to={path.cart} className='relative block p-2 text-white'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'

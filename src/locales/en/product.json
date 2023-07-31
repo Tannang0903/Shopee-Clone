@@ -1,3 +1,13 @@
 {
-  "available": "available products"
+  "preferred": "Preferred",
+  "views": "Views",
+  "sold": "Sold",
+  "off": "OFF",
+  "quantity": "Quantity",
+  "available": "pieces available",
+  "add to cart": "Add to cart",
+  "buy now": "Buy now",
+  "product description": "Product description",
+  "from the same shop": "From the same shop",
+  "top selling products": "Top selling products"
 }

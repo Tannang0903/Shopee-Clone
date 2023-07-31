@@ -15,6 +15,7 @@ import { ErrorResponse } from 'src/types/utils.type'
 import InputFile from 'src/components/InputFile'
 import { toast } from 'react-toastify'
 import { Helmet } from 'react-helmet-async'
+import { useTranslation } from 'react-i18next'
 
 type FormData = Pick<UserSchemaType, 'name' | 'address' | 'phone' | 'date_of_birth' | 'avatar'>
 
@@ -31,6 +32,8 @@ const Profile = () => {
   const previewImage = useMemo(() => {
     return file ? URL.createObjectURL(file) : ''
   }, [file])
+
+  const { t } = useTranslation('account')
 
   const {
     register,
@@ -125,8 +128,8 @@ const Profile = () => {
       </Helmet>
       <div className='rounded-sm bg-white px-8 py-4 shadow'>
         <div className='border-b-[1px] border-gray-300/40 pb-2'>
-          <h1 className='text-[20px] font-normal'>Hồ sơ của tôi</h1>
-          <h2 className='text-[15px] text-gray-600'>Quản lý thông tin hồ sơ để bảo mật tài khoản</h2>
+          <h1 className='text-[20px] font-normal'>{t('heading.my profile')}</h1>
+          <h2 className='text-[15px] text-gray-600'>{t('heading.description profile')}</h2>
         </div>
         <div className='grid grid-cols-10 gap-6 py-6'>
           <form className='col-span-7' onSubmit={handleSubmitForm}>
@@ -137,27 +140,27 @@ const Profile = () => {
               </div>
             </div>
             <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-              <div className='col-span-2 mb-2 text-right text-gray-600'>Tên</div>
+              <div className='col-span-2 mb-2 text-right text-gray-600'>{t('profile.user name')}</div>
               <div className='col-span-8'>
                 <Input
                   type='text'
                   name='name'
                   register={register}
                   errorMessage={errors.name?.message}
-                  placeholder='Tên'
+                  placeholder={t('profile.user name')}
                   classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
                 />
               </div>
             </div>
             <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-              <div className='col-span-2 mb-2 text-right text-gray-600'>Số điện thoại</div>
+              <div className='col-span-2 mb-2 text-right text-gray-600'>{t('profile.phone number')}</div>
               <div className='col-span-8'>
                 <Controller
                   control={control}
                   name='phone'
                   render={({ field }) => (
                     <InputNumber
-                      placeholder='Số điện thoại'
+                      placeholder={t('profile.phone number')}
                       classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
                       className='mt-2'
                       errorMessage={errors.phone?.message}
@@ -170,14 +173,14 @@ const Profile = () => {
               </div>
             </div>
             <div className='mt-4 grid grid-cols-10 items-center gap-6 text-[15px]'>
-              <div className='col-span-2 mb-2 text-right text-gray-600'>Địa chỉ</div>
+              <div className='col-span-2 mb-2 text-right text-gray-600'>{t('profile.address')}</div>
               <div className='col-span-8'>
                 <Input
                   type='text'
                   name='address'
                   register={register}
                   errorMessage={errors.address?.message}
-                  placeholder='Đại chỉ'
+                  placeholder={t('profile.address')}
                   classNameInput='w-full rounded-sm border-[1px] border-gray-300 px-4 py-1 outline-none'
                 />
               </div>
@@ -198,7 +201,7 @@ const Profile = () => {
                 type='submit'
                 className='col-span-2 col-start-3 rounded-sm bg-orange px-4 py-2 text-[15px] text-white shadow-sm'
               >
-                Lưu
+                {t('button.save')}
               </Button>
             </div>
           </form>
@@ -210,7 +213,7 @@ const Profile = () => {
                 className='mt-6 h-24 w-24 rounded-[50%] border-[1px] border-gray-300 shadow-sm'
               />
               <InputFile onChange={handleChangeFile} />
-              <span className='text-[14px] text-gray-500'>Dụng lượng file tối đa 1 MB Định dạng:.JPEG, .PNG</span>
+              <span className='text-[14px] text-gray-500'>{t('avatar.description')}</span>
             </div>
           </div>
         </div>

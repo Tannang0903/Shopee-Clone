@@ -14,7 +14,7 @@ import { locales } from 'src/i18n/i18n'
 const NavHeader = () => {
   const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
 
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation('header')
   const currentLanguage = locales[i18n.language as keyof typeof locales]
 
   const queryClient = useQueryClient()
@@ -47,7 +47,7 @@ const NavHeader = () => {
             target='_blank'
             rel='noreferrer'
           >
-            Kênh người bán
+            {t('navigation.seller center')}
           </a>
         </li>
         <Popover
@@ -91,11 +91,11 @@ const NavHeader = () => {
             rel='noreferrer'
             className='block border-r-[2px] border-gray-100/40 px-2 hover:text-gray-300'
           >
-            Tải ứng dụng
+            {t('navigation.download')}
           </a>
         </Popover>
         <li className='flex'>
-          <span className='border-gray-100/40 px-2'>Kết nối</span>
+          <span className='border-gray-100/40 px-2'>{t('navigation.follow us on')}</span>
           <a href='https://www.facebook.com/ShopeeVN' className='mr-2' target='_blank' rel='noreferrer'>
             <i className='fa-brands fa-facebook' />
           </a>
@@ -108,7 +108,7 @@ const NavHeader = () => {
         <li>
           <a href='/notice' className='block hover:text-gray-300'>
             <i className='fa-regular fa-bell'></i>
-            <span className='ml-1 mr-3 capitalize'>Thông báo</span>
+            <span className='ml-1 mr-3 capitalize'>{t('navigation.notifications')}</span>
           </a>
         </li>
         <li>
@@ -119,7 +119,7 @@ const NavHeader = () => {
             className='block hover:text-gray-300'
           >
             <i className='fa-regular fa-circle-question'></i>
-            <span className='ml-1 mr-3 capitalize'>Hỗ trợ </span>
+            <span className='ml-1 mr-3 capitalize'>{t('navigation.help')}</span>
           </a>
         </li>
         <Popover
@@ -148,24 +148,24 @@ const NavHeader = () => {
             className='flex cursor-pointer items-center'
             renderPopover={
               <div className='relative overflow-hidden rounded-sm border border-gray-100 bg-white shadow-md'>
-                <div className='flex w-[160px] flex-col'>
+                <div className='flex w-[180px] flex-col'>
                   <Link
                     to={path.profile}
-                    className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'
+                    className='block px-4 py-2 text-left capitalize hover:bg-gray-100 hover:text-emerald-400'
                   >
-                    Tài khoản của tôi
+                    {t('navigation.my account')}
                   </Link>
                   <Link
                     to={path.historyPurchase}
-                    className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'
+                    className='block px-4 py-2 text-left capitalize hover:bg-gray-100 hover:text-emerald-400'
                   >
-                    Đơn mua
+                    {t('navigation.my purchase')}
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className='block px-4 py-2 text-left hover:bg-gray-100 hover:text-emerald-400'
+                    className='block px-4 py-2 text-left capitalize hover:bg-gray-100 hover:text-emerald-400'
                   >
-                    Đăng xuất
+                    {t('navigation.logout')}
                   </button>
                 </div>
               </div>
@@ -178,10 +178,10 @@ const NavHeader = () => {
         {!isAuthenticated && (
           <li className='flex items-center'>
             <Link to={path.register} className=' border-r border-r-gray-300 px-3 capitalize hover:text-white/70'>
-              Đăng kí
+              {t('navigation.sign up')}
             </Link>
             <Link to={path.login} className=' px-3 capitalize hover:text-white/70 '>
-              Đăng nhập
+              {t('navigation.login')}
             </Link>
           </li>
         )}

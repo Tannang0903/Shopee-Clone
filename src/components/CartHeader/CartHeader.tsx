@@ -2,17 +2,20 @@ import { Link } from 'react-router-dom'
 import NavHeader from '../NavHeader'
 import path from 'src/constants/path'
 import useSearchProducts from 'src/hooks/useSearchProducts'
+import { useTranslation } from 'react-i18next'
 
 const CartHeader = () => {
   const { register, handleSubmitSearchProduct } = useSearchProducts()
 
+  const { t } = useTranslation('header')
+
   return (
-    <header className='h-[120px] bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
+    <header className='h-[120px] bg-white shadow-sm'>
       <div className='text-[14px] font-light leading-4 text-white'>
         <div className='bg-gradient-to-b from-[#f53d2d] to-[#f63] '>
           <NavHeader />
         </div>
-        <div className='container grid h-[84px] grid-cols-12 justify-between gap-4 '>
+        <div className='container grid h-[84px] grid-cols-12 justify-between gap-4'>
           <Link to={path.home} className='col-span-4 grid grid-cols-2 items-center px-[6px]'>
             <svg viewBox='0 0 192 65' className='col-span-1 m-auto w-[70%] fill-orange'>
               <g>
@@ -20,7 +23,7 @@ const CartHeader = () => {
               </g>
             </svg>
             <span className='col-span-1 mt-[14px] border-l-[1px] border-orange px-4 py-2 text-[20px] font-normal capitalize text-orange'>
-              Giỏ hàng
+              {t('cart header.shopping cart')}
             </span>
           </Link>
           <form className='col-span-6 col-start-7 my-auto' onSubmit={handleSubmitSearchProduct}>
@@ -28,7 +31,7 @@ const CartHeader = () => {
               <input
                 type='text'
                 className='block h-[40px] w-full rounded-sm border-[2px] border-orange bg-white px-4 font-light text-gray-800 outline-[1px] outline-offset-4 outline-black'
-                placeholder='Tìm kiếm giỏ hàng'
+                placeholder={t('search.search products')}
                 {...register('name')}
               />
               <button className='absolute right-[0px] top-[0px] h-[40px] rounded-sm bg-[#fb5533] px-[28px] hover:bg-[#fe6141]'>

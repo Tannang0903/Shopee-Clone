@@ -1,0 +1,26 @@
+{
+  "navigation": {
+    "seller center": "Seller center",
+    "download": "Download",
+    "follow us on": "Follow us on",
+    "notifications": "Notifications",
+    "help": "Help",
+    "sign up": "Sign up",
+    "login": "Login",
+    "my account": "My account",
+    "my purchase": "My purchase",
+    "logout": "Logout"
+  },
+  "cart": {
+    "no products yet": "No Products Yet",
+    "recently added products": "Recently added products",
+    "view my shopping cart": "View my shopping cart",
+    "more products in cart": "More products in cart"
+  },
+  "search": {
+    "search products": "Search products"
+  },
+  "cart header": {
+    "shopping cart": "Shopping cart"
+  }
+}

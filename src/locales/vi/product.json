@@ -1,3 +1,13 @@
 {
-  "available": "sản phẩm có sẵn"
+  "preferred": "Yêu thích",
+  "views": "Lượt xem",
+  "sold": "Đã bán",
+  "off": "Giảm",
+  "quantity": "Số lượng",
+  "available": "sản phẩm có sẵn",
+  "add to cart": "Thêm vào giỏ hàng",
+  "buy now": "Mua ngay",
+  "product description": "Mô tả sản phẩm",
+  "from the same shop": "Có thể bạn cũng thích",
+  "top selling products": "Top sản phẩm bán chạy"
 }

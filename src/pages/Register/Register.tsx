@@ -13,10 +13,13 @@ import Button from 'src/components/Button'
 import path from 'src/constants/path'
 import Input from 'src/components/Input'
 import { Helmet } from 'react-helmet-async'
+import { useTranslation } from 'react-i18next'
 
 const Register = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
+
+  const { t } = useTranslation('form')
 
   const {
     register,
@@ -72,7 +75,7 @@ const Register = () => {
           <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-[60px]'>
             <div className='rounded-sm bg-white p-[30px] lg:col-span-2 lg:col-start-4 '>
               <form onSubmit={onSubmit} noValidate>
-                <h1 className='text-xl'>Đăng kí</h1>
+                <h1 className='text-xl'>{t('register.register')}</h1>
                 <Input
                   type='email'
                   name='email'
@@ -86,7 +89,7 @@ const Register = () => {
                   type='password'
                   name='password'
                   register={register}
-                  placeholder='Mật khẩu'
+                  placeholder={t('form.password')}
                   className='relative mt-3'
                   errorMessage={errors.password?.message}
                   autoComplete='on'
@@ -95,7 +98,7 @@ const Register = () => {
                   type='password'
                   name='confirm_password'
                   register={register}
-                  placeholder='Xác nhận mật khẩu'
+                  placeholder={t('form.confirm password')}
                   className='relative mt-3'
                   errorMessage={errors.confirm_password?.message}
                   autoComplete='on'
@@ -107,13 +110,15 @@ const Register = () => {
                     isLoading={registerAccountMutation.isLoading}
                     disabled={registerAccountMutation.isLoading}
                   >
-                    Đăng Kí
+                    {t('register.register')}
                   </Button>
                 </div>
                 <footer className='mt-6 text-center'>
-                  <span className='mr-1 text-sm font-light text-[#b5b5b5]'>Bạn đã có tài khoản?</span>
+                  <span className='mr-1 text-sm font-light text-[#b5b5b5]'>
+                    {t('register.do you already have an account?')}
+                  </span>
                   <Link to={path.login} className='text-sm font-normal text-[#ee4d2d]'>
-                    Đăng nhập
+                    {t('log in.log in')}
                   </Link>
                 </footer>
               </form>

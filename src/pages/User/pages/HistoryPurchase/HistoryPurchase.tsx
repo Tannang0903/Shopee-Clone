@@ -9,19 +9,21 @@ import { purchasesStatus } from 'src/constants/purchase'
 import { useQueryParams } from 'src/hooks/useQueryParams'
 import { PurchaseListStatus } from 'src/types/purchase.type'
 import { formatCurrency } from 'src/utils/utils'
-
-const purchaseTabs = [
-  { status: purchasesStatus.all, name: 'Tất cả' },
-  { status: purchasesStatus.waitForConfirmation, name: 'Chờ xác nhận' },
-  { status: purchasesStatus.waitForGetting, name: 'Chờ lấy hàng' },
-  { status: purchasesStatus.inProgress, name: 'Đang giao' },
-  { status: purchasesStatus.delivered, name: 'Đã giao' },
-  { status: purchasesStatus.cancelled, name: 'Đã hủy' }
-]
+import { useTranslation } from 'react-i18next'
 
 const HistoryPurchase = () => {
   const queryParams: { status?: string } = useQueryParams()
   const status: number = Number(queryParams.status) || purchasesStatus.all
+
+  const { t } = useTranslation('account')
+  const purchaseTabs = [
+    { status: purchasesStatus.all, name: t('purchase.all') },
+    { status: purchasesStatus.waitForConfirmation, name: t('purchase.wait for confirmation') },
+    { status: purchasesStatus.waitForGetting, name: t('purchase.wait for getting') },
+    { status: purchasesStatus.inProgress, name: t('purchase.in progress') },
+    { status: purchasesStatus.delivered, name: t('purchase.delivered') },
+    { status: purchasesStatus.cancelled, name: t('purchase.cancelled') }
+  ]
 
   const PurchasesInCartQuery = useQuery({
     queryKey: ['purchases', { status }],
@@ -106,7 +108,7 @@ const HistoryPurchase = () => {
                       fill='#fff'
                     ></path>
                   </svg>
-                  <span className='mx-2'>Thành tiền:</span>
+                  <span className='mx-2'>{t('purchase.order total')}:</span>
                   <span className='text-[20px] text-orange'>
                     {formatCurrency(purchase.buy_count * purchase.product.price)}
                   </span>

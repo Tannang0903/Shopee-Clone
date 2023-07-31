@@ -12,10 +12,13 @@ import Button from 'src/components/Button'
 import path from 'src/constants/path'
 import Input from 'src/components/Input'
 import { Helmet } from 'react-helmet-async'
+import { useTranslation } from 'react-i18next'
 
 const Login = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
+
+  const { t } = useTranslation('form')
 
   const {
     register,
@@ -70,7 +73,7 @@ const Login = () => {
           <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-[60px]'>
             <div className='rounded-sm bg-white p-[30px] lg:col-span-2 lg:col-start-4 '>
               <form onSubmit={onSubmit} noValidate>
-                <h1 className='text-xl'>Đăng nhập</h1>
+                <h1 className='text-xl'>{t('log in.log in')}</h1>
                 <Input
                   type='email'
                   name='email'
@@ -84,7 +87,7 @@ const Login = () => {
                   type='password'
                   name='password'
                   register={register}
-                  placeholder='Mật khẩu'
+                  placeholder={t('form.password')}
                   className='relative mt-3'
                   errorMessage={errors.password?.message}
                   autoComplete='on'
@@ -96,21 +99,21 @@ const Login = () => {
                     isLoading={loginMutation.isLoading}
                     disabled={loginMutation.isLoading}
                   >
-                    Đăng Nhập
+                    {t('log in.log in')}
                   </Button>
                 </div>
                 <div className='mt-1 flex justify-between'>
                   <Link to={'/forget-password'} className='mt-1  text-xs font-light text-blue-800'>
-                    Quên mật khẩu
+                    {t('log in.forget password')}
                   </Link>
                   <Link to={'/login-with-sms'} className='mt-1 text-xs font-light text-blue-800'>
-                    Đăng nhập với SMS
+                    {t('log in.log in with phone number')}
                   </Link>
                 </div>
                 <footer className='mt-6 text-center'>
-                  <span className='mr-1 text-sm font-light text-[#b5b5b5]'>Bạn mới biết đến Shopee?</span>
+                  <span className='mr-1 text-sm font-light text-[#b5b5b5]'>{t('log in.new to shopee')}</span>
                   <Link to={path.register} className='text-sm font-normal text-[#ee4d2d]'>
-                    Đăng ký
+                    {t('register.register')}
                   </Link>
                 </footer>
               </form>

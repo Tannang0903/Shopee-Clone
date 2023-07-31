@@ -14,7 +14,6 @@ import { toast } from 'react-toastify'
 import path from 'src/constants/path'
 import { useTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet-async'
-import { convert } from 'html-to-text'
 
 const ProductDetail = () => {
   const { id } = useParams()
@@ -130,14 +129,7 @@ const ProductDetail = () => {
     <Fragment>
       <Helmet>
         <title>{product.name}</title>
-        <meta
-          name='description'
-          content={convert(product.description, {
-            limits: {
-              maxInputLength: 150
-            }
-          })}
-        />
+        <meta name='description' content='Đây là trang mô tả sản phẩm của dự án Shopee Clone' />
       </Helmet>
       <div className='bg-gray-100 py-[60px]'>
         <div>
@@ -190,8 +182,8 @@ const ProductDetail = () => {
             <div className='col-span-7'>
               <div className='overflow-hidden'>
                 <div className='min-h-[56px] text-start text-xl leading-8 line-clamp-2'>
-                  <div className='mr-3 inline-flex -translate-y-[12%] rounded-sm bg-orange px-2 py-[2px] text-xs text-white shadow-sm'>
-                    Yêu thích
+                  <div className='mr-3 inline-flex -translate-y-[12%] rounded-sm bg-orange px-2 py-[2px] text-xs capitalize text-white shadow-sm'>
+                    {t('preferred')}
                   </div>
                   <span className=''>{product.name}</span>
                 </div>
@@ -207,13 +199,13 @@ const ProductDetail = () => {
                   <span className='mr-2 border-b-[1px] border-gray-500 text-[16px] font-normal '>
                     {formatNumberToSocialStyle(product.view)}
                   </span>
-                  <span className='text-[14px] capitalize text-gray-500'>Lượt xem</span>
+                  <span className='text-[14px] capitalize text-gray-500'>{t('views')}</span>
                 </div>
                 <div className='px-6'>
                   <span className='mr-2 border-b-[1px] border-gray-500 text-[16px] font-normal'>
                     {formatNumberToSocialStyle(product.sold)}
                   </span>
-                  <span className='text-[14px] capitalize text-gray-500'>Đã bán</span>
+                  <span className='text-[14px] capitalize text-gray-500'>{t('sold')}</span>
                 </div>
               </div>
               <div className='mt-3 flex items-center bg-[#fafafa] px-5 py-5'>
@@ -222,11 +214,13 @@ const ProductDetail = () => {
                 </span>
                 <span className='mx-4 text-[28px] text-orange '>{formatCurrency(product.price)}</span>
                 <div className='rounded-sm bg-orange px-[4px] text-[12px] font-bold leading-4 text-white shadow-sm '>
-                  <span>{rateSale(product.price_before_discount, product.price)} Giảm</span>
+                  <span>
+                    {rateSale(product.price_before_discount, product.price)} {t('off')}
+                  </span>
                 </div>
               </div>
               <div className='mt-6 grid grid-cols-6'>
-                <span className='col-span-1 ml-5 text-[14px] capitalize text-gray-500'>Số lượng</span>
+                <span className='col-span-1 ml-5 text-[14px] capitalize text-gray-500'>{t('quantity')}</span>
                 <div className='col-span-5 flex'>
                   <QuantityController
                     onDecrease={handleBuyCount}
@@ -247,10 +241,13 @@ const ProductDetail = () => {
                   className='mx-5 mt-8 h-[48px] rounded-sm border border-orange bg-[#ffeee8] px-4 text-orange shadow-sm'
                 >
                   <i className='fa-solid fa-cart-plus'></i>
-                  <span className='ml-2'>Thêm vào giỏ hàng</span>
+                  <span className='ml-2 capitalize'>{t('add to cart')}</span>
                 </button>
-                <button onClick={handleBuyNow} className='h-[48px] rounded-sm bg-orange px-4 text-white shadow-sm'>
-                  Mua ngay
+                <button
+                  onClick={handleBuyNow}
+                  className='h-[48px] rounded-sm bg-orange px-4 capitalize text-white shadow-sm'
+                >
+                  {t('buy now')}
                 </button>
               </div>
             </div>
@@ -258,7 +255,9 @@ const ProductDetail = () => {
           <div className='container mt-6 grid grid-cols-12 gap-6'>
             <div className='col-span-9'>
               <div className='mb-6 rounded-sm bg-white p-6 shadow'>
-                <h3 className='rounded-sm bg-gray-100/50 px-4 py-2 text-[18px] uppercase shadow-sm'>Mô tả sản phẩm</h3>
+                <h3 className='rounded-sm bg-gray-100/50 px-4 py-2 text-[18px] uppercase shadow-sm'>
+                  {t('product description')}
+                </h3>
                 <div className='mt-8 text-[13px]'>
                   <div
                     dangerouslySetInnerHTML={{
@@ -268,7 +267,7 @@ const ProductDetail = () => {
                 </div>
               </div>
               <div>
-                <h3 className='rounded-sm text-[16px] uppercase'>Có thể bạn cũng thích</h3>
+                <h3 className='rounded-sm text-[16px] uppercase'>{t('from the same shop')}</h3>
                 {productsData && (
                   <div className='mt-6 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
                     {ProductListQuery.data?.data.data.products.map((product) => (
@@ -281,7 +280,7 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className='col-span-3 rounded-sm bg-white p-6 shadow'>
-              <h4>Top sản phẩm bán chạy</h4>
+              <h4>{t('top selling products')}</h4>
             </div>
           </div>
         </div>

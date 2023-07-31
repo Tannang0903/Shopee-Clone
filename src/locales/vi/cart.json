@@ -1,0 +1,20 @@
+{
+  "table heading": {
+    "product": "Sản phẩm",
+    "unit price": "Đơn giá",
+    "quantity": "Số lượng",
+    "total price": "Số tiền",
+    "actions": "Thao tác"
+  },
+  "footer": {
+    "select all": "Chọn tất cả",
+    "total": "Tổng thanh toán",
+    "item": "sản phẩm",
+    "saved": "Tiết kiệm",
+    "check out": "Mua hàng"
+  },
+  "empty cart": {
+    "your shopping cart is empty": "Giỏ hàng của bạn còn trống",
+    "go shopping now": "Mua ngay"
+  }
+}
