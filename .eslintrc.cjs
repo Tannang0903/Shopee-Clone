@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
-
 module.exports = {
   extends: [
     'eslint:recommended',
@@ -10,7 +9,8 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:@typescript-eslint/recommended',
     'eslint-config-prettier',
-    'prettier'
+    'prettier',
+    'plugin:storybook/recommended'
   ],
   plugins: ['prettier'],
   settings: {

@@ -43,7 +43,7 @@ export const defaultNS = 'home'
 i18n.use(initReactI18next).init({
   resources: resources,
   lng: 'vi',
-  ns: ['home', 'product', 'header', 'account', 'cart'],
+  ns: ['home', 'product', 'header', 'account', 'cart', 'form'],
   fallbackLng: 'vi',
   defaultNS: defaultNS,
   interpolation: {

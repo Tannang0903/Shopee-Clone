@@ -86,7 +86,16 @@ const Pagination = ({ queryConfig, pageSize }: Props) => {
     <div className='mt-6 flex flex-wrap justify-center'>
       {page === 1 ? (
         <span className='mx-2 flex h-8 w-8 cursor-not-allowed items-center justify-center rounded bg-gray-300 text-gray-600 shadow-sm'>
-          <i className='fa-solid fa-angle-left'></i>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth='1.5'
+            stroke='currentColor'
+            className='h-4 w-4'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5L8.25 12l7.5-7.5' />
+          </svg>
         </span>
       ) : (
         <Link
@@ -99,7 +108,16 @@ const Pagination = ({ queryConfig, pageSize }: Props) => {
           }}
           className='mx-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-gray-300 text-gray-600 shadow-sm'
         >
-          <i className='fa-solid fa-angle-left'></i>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth='1.5'
+            stroke='currentColor'
+            className='h-4 w-4'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5L8.25 12l7.5-7.5' />
+          </svg>
         </Link>
       )}
 
@@ -107,7 +125,16 @@ const Pagination = ({ queryConfig, pageSize }: Props) => {
 
       {page === pageSize ? (
         <span className='mx-2 flex h-8 w-8 cursor-not-allowed items-center justify-center rounded bg-gray-300 text-gray-600 shadow-sm'>
-          <i className='fa-solid fa-angle-right'></i>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth='1.5'
+            stroke='currentColor'
+            className='h-4 w-4'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M8.25 4.5l7.5 7.5-7.5 7.5' />
+          </svg>
         </span>
       ) : (
         <Link
@@ -120,7 +147,16 @@ const Pagination = ({ queryConfig, pageSize }: Props) => {
           }}
           className='mx-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded bg-gray-300 text-gray-600 shadow-sm'
         >
-          <i className='fa-solid fa-angle-right'></i>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth='1.5'
+            stroke='currentColor'
+            className='h-4 w-4'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' d='M8.25 4.5l7.5 7.5-7.5 7.5' />
+          </svg>
         </Link>
       )}
     </div>

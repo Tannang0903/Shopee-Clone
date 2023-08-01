@@ -62,7 +62,16 @@ const QuantityController = ({
         className='flex min-h-[28px] min-w-[28px] items-center justify-center rounded-bl-sm rounded-tl-sm border border-gray-400/40'
         onClick={handleDecrease}
       >
-        <i className='fa-solid fa-minus text-[10px]'></i>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          strokeWidth='1.5'
+          stroke='currentColor'
+          className='h-5 w-5'
+        >
+          <path strokeLinecap='round' strokeLinejoin='round' d='M18 12H6' />
+        </svg>
       </button>
       <InputNumber
         className='w-full border-y border-gray-400/50'
@@ -77,7 +86,16 @@ const QuantityController = ({
         className='flex min-h-[28px] min-w-[28px] items-center justify-center rounded-br-sm rounded-tr-sm border border-gray-400/40'
         onClick={handleIncrease}
       >
-        <i className='fa-solid fa-plus text-[10px]'></i>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          strokeWidth='1.5'
+          stroke='currentColor'
+          className='h-5 w-5'
+        >
+          <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v12m6-6H6' />
+        </svg>
       </button>
     </div>
   )
